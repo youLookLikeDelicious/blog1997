@@ -18,7 +18,7 @@ nuxt.config.js
 >layout的命名视图--navigate和foot  
 >设置axios的baseURL
   
-使用dotenv配置全局变量  
-配有esline  
+>使用dotenv配置全局变量  
+>配有esline  
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
