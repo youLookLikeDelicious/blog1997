@@ -1,4 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-Vue.prototype.$axios = axios
+Vue.use({
+  install (Vue) {
+    Vue.prototype.$axios = axios
+  }
+})
