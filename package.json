@@ -1,0 +1,23 @@
+{
+  "name": "blog1997-admin",
+  "version": "1.0.0",
+  "description": "manage blog1997 information",
+  "author": "xy",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.1.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.0"
+  }
+}
