@@ -8,6 +8,7 @@
         base.scss     --全局属性  
         _mixin.scss   --sass的函数  
         _placeholder  --sass的占位符  
+        _variable     --css全局变量
   
     plugins  
         filter.js         --管道操作  
