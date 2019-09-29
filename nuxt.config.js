@@ -32,7 +32,8 @@ export default {
     scss: [
       '@/assets/style/_mixin.scss',
       '@/assets/style/_placeholder.scss',
-    ],
+      '@/assets/style/_variable.scss'
+    ]
   },
   /*
   ** Plugins to load before mounting the App
@@ -72,16 +73,16 @@ export default {
   },
   // 命名视图
   router: {
-    extendRoutes(routes, resolve){
-      routes.forEach( (route, index) => {
+    extendRoutes (routes, resolve) {
+      routes.forEach((route, index) => {
         routes[index] = {
           ...route,
-          components:{
+          components: {
             default: route.component,
             'navigate': resolve(__dirname, 'components/layout/navigate'),
             'foot': resolve(__dirname, 'components/layout/foot')
           },
-          chunkNames:{
+          chunkNames: {
             'navigate': 'components/layout/navigate',
             'foot': 'components/layout/foot'
           }
@@ -91,6 +92,6 @@ export default {
   },
   server: {
     port: 3001, // default: 3000
-    host: '0.0.0.0', // default: localhost
-  },
+    host: '0.0.0.0' // default: localhost
+  }
 }
