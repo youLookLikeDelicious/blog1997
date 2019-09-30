@@ -1,4 +1,4 @@
-html, body, div, p, table, tr, td, ul, ul li, input, img, h1, h2 ,h3, h4, h5, span, i, article, table, td, tr, select, select option,section, header, textarea, br, hr, dl, dl dd, dl, dt{margin:0; padding: 0}
+html, body, div, p, table, tr, td, ul, ul li, input, img, h1, h2 ,h3, h4, h5, span, i, article, select, select option,section, header, textarea, br, hr, dl, dl dd, dl, dt{margin:0; padding: 0}
 body{background: #e6ecf0; font-family: "Microsoft YaHei","SimSun",sans-serif}
 html, body, img{border: 0}
 a, a:hover, a:link, a:visited{
@@ -7,9 +7,6 @@ a, a:hover, a:link, a:visited{
 }
 textarea{
   box-sizing: border-box;
-}
-html{
-  font-size: 16px;
 }
 body{
   font-size: 62.5%;
