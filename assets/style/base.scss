@@ -11,6 +11,9 @@ textarea{
 body{
   font-size: 62.5%;
 }
+.div{
+  box-sizing: border-box;
+}
 .clear{
   &:after{
     content: '';
