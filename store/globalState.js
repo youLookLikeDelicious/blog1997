@@ -8,14 +8,14 @@ const state = function () {
 const mutations = {
   // 设置数据的状态
   setPromptMessage (state, msg) {
-    if( state.promptMessage === msg ){
+    if (state.promptMessage === msg) {
       return
     }
     state.promptMessage = msg
   }
 }
 
-export{
+export {
   state,
   mutations
 }
