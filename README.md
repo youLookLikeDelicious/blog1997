@@ -21,5 +21,6 @@
   
     使用dotenv配置全局变量  
     配有esline  
-
+## 使用
+新建git库的时候，使用import code，将该项目导入到新的项目中
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
