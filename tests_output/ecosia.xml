@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="ecosia"
+    errors="1" failures="0" hostname="" id="" package="ecosia" skipped="1"
+    tests="0" time="0.000" timestamp="">
+  
+
+  
+    <system-err>
+        Error: An error occurred while retrieving a new session: &#34;getaddrinfo ENOTFOUND https://www.blog1997.com&#34;
+       at Socket.socketErrorListener (_http_client.js:432:9)
+       at emitErrorNT (internal/streams/destroy.js:84:8)
+       at processTicksAndRejections (internal/process/task_queues.js:84:21)
+    </system-err>
+  
+
+    
+    <error message="An error occurred while retrieving a new session: &#34;getaddrinfo ENOTFOUND https://www.blog1997.com&#34;"><![CDATA[
+      Error: An error occurred while retrieving a new session: &#34;getaddrinfo ENOTFOUND https://www.blog1997.com&#34;
+    at WebdriverProtocol.handleSessionCreateError (/var/web/blog-1997/node_modules/nightwatch/lib/transport/transport.js:103:15)
+    at HttpRequest.&lt;anonymous&gt; (/var/web/blog-1997/node_modules/nightwatch/lib/transport/transport.js:158:32)
+    at HttpRequest.emit (events.js:321:20)
+    at ClientRequest.&lt;anonymous&gt; (/var/web/blog-1997/node_modules/nightwatch/lib/http/request.js:131:19)
+    at ClientRequest.emit (events.js:333:22)
+    at Socket.socketErrorListener (_http_client.js:432:9)
+    at Socket.emit (events.js:321:20)
+    at emitErrorNT (internal/streams/destroy.js:84:8)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21)
+      ]]></error>  
+
+  
+    
+    <testcase
+      name="Demo test ecosia.org" classname="ecosia">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

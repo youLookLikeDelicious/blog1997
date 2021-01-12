@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+  <head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+    <!--[if IE 9]>
+      <link rel="stylesheet" href="/style/ie9.css">
+    <![endif]-->
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
+  <!--[if lte IE 9]>
+    <script>
+      // 创建元素
+      var div = document.createElement('div')
+      div.innerHTML = '为了更加舒适的用户体验，请将您的IE浏览器升级到最新版本，或使用其他浏览器'
+      div.style.color = 'orange'
+      div.style.width = '100%'
+      div.style.height = '5rem'
+      div.style.textAlign = 'center'
+      div.style.fontSize = '1.6rem'
+      div.style.zIndex = '9999'
+      div.style.marginBottom = '2rem'
+      div.style.position = 'relative'
+      
+      document.body.insertBefore(div, document.body.getElementsByTagName('div')[0])
+    </script>
+  <![endif]-->
+</html>

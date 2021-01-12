@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://www.blog1997.com",
+  "videoCompression": 1,
+  "projectId": "h8ui6x",
+  "env": {
+    "host": "https://www.blog1997.com"
+  },
+  "defaultCommandTimeout": 10000
+}

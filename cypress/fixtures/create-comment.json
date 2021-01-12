@@ -1,0 +1,18 @@
+{
+    "status": "success",
+    "message": "\u8bc4\u8bba\u6210\u529f",
+    "data": {
+        "user_id": 10,
+        "able_id": 83,
+        "able_type": "App\\Model\\Article",
+        "content": "<p>test<img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\" alt=\"j_0001.gif\" /><span class=\"mathquill-embedded-latex\" style=\"width:56.6875px;height:44px;\">_{n\\to\\infty}^{\\lim}</span></p>",
+        "level": 1,
+        "reply_to": 0,
+        "reply_to_name": "Blog1997",
+        "updated_at": "1598172027",
+        "created_at": "1598172027",
+        "id": 36,
+        "thumbs": 0,
+        "replies": []
+    }
+}

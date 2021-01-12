@@ -1,0 +1,137 @@
+%user_info_wrap{
+  $height: 5rem;
+  font-size: 1.6rem;
+  .user_info_wrap {
+    div {
+      display: inline-block;
+    }
+  }
+  div{
+    vertical-align: middle;
+  }
+  .avatar{
+    width: $height;
+    height: $height;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .user_info{
+    margin-left: 1.7rem;
+  }
+  .user_info div{
+    height: $height;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    p{
+      &:first-child{
+        margin-bottom: .2rem;
+      }
+    }
+  }
+}
+%btn{
+  font-size: 1.3rem;
+  line-height: 100%;
+  border-radius: 0.3rem;
+  padding: 0.5rem 0.7rem;
+  box-sizing: border-box;
+}
+// 评论按钮样式
+%submit-btn{
+  @extend %btn;
+  color: #fff;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=$btn-color-1, endColorstr=$btn-color-2);
+  @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-1, $btn-color-2 )) );
+  &:hover{
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=$btn-color-2, endColorstr=$btn-color-1);
+    @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-2, $btn-color-1 )) );
+  }
+}
+// 文字渐变
+%text-gradient{
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #00c6fb !important;
+  @include compatible-style('', ('background-image': linear-gradient(-30deg, #ffffff, #f0eff0 )) );
+}
+%text-gradient-blue{
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  @include compatible-style('', ('background-image': linear-gradient(-30deg, #00c6fb, #005bea )) );
+}
+
+%scroll-bar-base {
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+      transition: all 1s ease-out;
+      box-shadow: inset 0 0 5px #f6f6f6;
+      background-color: inherit;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+      @include compatible-style("",
+          ("background-image": linear-gradient(to bottom right, #e6e6e6, #cecece),
+          ));
+      border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+      @include compatible-style("",
+          ("background-image": linear-gradient(to bottom right, #e6e6e6, #999),
+          ));
+  }
+}
+
+%scroll-bar-min {
+  &::-webkit-scrollbar {
+      width: .3rem;
+      height: 100%;
+  }
+
+  @extend %scroll-bar-base;
+}
+
+%scroll-bar {
+  &::-webkit-scrollbar {
+      width: 1rem;
+      height: 100%;
+  }
+
+  @extend %scroll-bar-base;
+}
+
+%read-more{
+  a {
+    width: 97%;
+    margin-left: 2%;
+    display: block;
+    padding: 0.9em 0;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4rem;
+    font-size: 1.4rem;
+    color: #f7f7f7;
+    @include compatible-style(
+      "",
+      (
+        "background-image": linear-gradient(to bottom right, #276ace, #29bdd9),
+      )
+    );
+    &:hover {
+      span {
+        margin-left: 1rem;
+      }
+    }
+    span {
+      transition-duration: 0.3s;
+    }
+  }
+}

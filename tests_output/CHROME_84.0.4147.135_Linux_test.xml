@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="1">
+
+  <testsuite name="test"
+    errors="0" failures="1" hostname="" id="" package="test" skipped="0"
+    tests="1" time="8.197" timestamp="">
+  
+    <testcase name="test www.blog1997.com with window size 800 * 1000" classname="test" time="8.197" assertions="1">  <failure message="Timed out while waiting for element &lt;main&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5056ms)">    at DescribeInstance.&lt;anonymous&gt; (/var/web/blog-1997/tests/e2e/specs/test.js:4:83)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

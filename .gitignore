@@ -89,3 +89,11 @@ sw.*
 
 # Vim swap files
 *.swp
+
+.npmignore
+
+.vscode
+
+.nyc_output
+
+.cypress/videos

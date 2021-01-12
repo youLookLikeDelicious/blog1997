@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "message": "success",
+    "data": {
+        "id": 10,
+        "name": "",
+        "avatar": "",
+        "email": "1516336@163.com",
+        "article_sum": 0,
+        "created_at": {
+            "date": "2021-01-06 23:20:49.000000",
+            "timezone_type": 3,
+            "timezone": "Asia\/Shanghai"
+        }
+    }
+}

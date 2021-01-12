@@ -1,0 +1,52 @@
+/*
+ * @param string $name     
+ * @param map    $styles   style属性的键值对
+ * @param string $pseudo   判断是否是伪类选择器 : | ::
+ */
+@mixin compatible-style($name, $styles, $pseudo : ''){
+  // 名称的兼容性写法
+  // eg input::-moz-input-placeholder
+  // @include compatible-style("input-placeholder", ("color": #a4a7a9, "letter-spacing": .2rem), "&::");
+  @if $name != '' {
+    // #{$pseudo + '-moz-' + $name}: $styles;
+    // #{$pseudo + '-ms-' + $name}: $styles;
+    // #{$pseudo + '-o-' + $name}: $styles;
+    // #{$pseudo + '-webkit-' + $name}: $styles;
+    // #{$pseudo + $name}: $styles;
+    #{$pseudo}-moz-#{$name} {
+      @each $style, $value in $styles {
+        #{$style}: $value;
+      }
+    }
+    #{$pseudo}-o-#{$name} {
+      @each $style, $value in $styles {
+        #{$style}: $value;
+      }
+    }
+    #{$pseudo}-ms-#{$name} {
+      @each $style, $value in $styles {
+        #{$style}: $value;
+      }
+    }
+    #{$pseudo}-webkit-#{$name} {
+      @each $style, $value in $styles {
+        #{$style}: $value;
+      }
+    }
+    #{$pseudo}#{$name} {
+      @each $style, $value in $styles {
+        #{$style}: $value;
+      }
+    }
+  }
+  // 属性的兼容性写法
+  @else{
+    @each $style, $value in $styles{
+      #{$style}: #{'-moz-' + $value};
+      #{$style}: #{'-ms-' + $value};
+      #{$style}: #{'-o-' + $value};
+      #{$style}: #{'-webkit-' + $value};
+      #{$style}: $value;
+    }
+  }
+}

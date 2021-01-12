@@ -1,0 +1,42 @@
+#navigate {
+    z-index: 99;
+}
+#navigate .menu {
+    width: 60%;
+}
+#navigate .menu ul {
+    display: inline-block;
+    overflow: hidden;
+}
+#navigate .menu ul li {
+    float: left;
+    width: 13rem;
+}
+#navigate .header-item {
+    width: 87%;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+}
+#navigate .header-item .search{
+    padding: 0 1.2rem;
+    vertical-align: middle;
+}
+#navigate .header-item .search a{
+    top: .3rem;
+    right: 1.7rem;
+}
+
+#navigate .header-item .user-info{
+    float: right;
+    height: 6rem;
+    line-height: 6rem;
+}
+#navigate .logo {
+    width: 10%;
+    display: inline-block;
+    vertical-align: middle;
+}
+#navigate .header-item div{
+    display: inline-block;
+}

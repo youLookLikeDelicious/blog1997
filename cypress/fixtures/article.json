@@ -1,0 +1,209 @@
+{
+    "comment": "请求文章返回的数据",
+    "status": "success",
+    "message": "success",
+    "data": {
+        "records": [
+            {
+                "name": "chaos",
+                "liked": 1,
+                "level": 1,
+                "content": "<p>12<\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 7,
+                "id": 11,
+                "able_id": 3,
+                "created_at": "1593570465",
+                "thumbs": 0,
+                "replies": [
+                    {
+                        "id": 12,
+                        "level": 2,
+                        "liked": 1,
+                        "reply_to_name": "youLookLikeDelicious",
+                        "user_id": 1,
+                        "name": "chaos",
+                        "content": "\u8be5\u8bc4\u8bba\u6d89\u5acc\u8fdd\u89c4,\u5df2\u88ab\u5220\u9664",
+                        "able_id": 11,
+                        "root_id": 11,
+                        "reply_to": 1,
+                        "thumbs": 0
+                    },
+                    {
+                        "id": 13,
+                        "level": 3,
+                        "liked": 0,
+                        "reply_to_name": "youLookLikeDelicious",
+                        "user_id": 1,
+                        "name": "chaos",
+                        "content": "<p><span class=\"mathquill-embedded-latex\" style=\"width:33.2699px;height:39.25px;\">x_{12}^{12}<\/span>\u00a0<\/p>",
+                        "able_id": 12,
+                        "root_id": 11,
+                        "reply_to": 1,
+                        "thumbs": 0
+                    },
+                    {
+                        "id": 14,
+                        "level": 3,
+                        "liked": 1,
+                        "reply_to_name": "youLookLikeDelicious",
+                        "user_id": 1,
+                        "name": "chaos",
+                        "content": "\u8be5\u8bc4\u8bba\u6d89\u5acc\u8fdd\u89c4,\u5df2\u88ab\u5220\u9664",
+                        "able_id": 13,
+                        "root_id": 11,
+                        "reply_to": 1,
+                        "thumbs": 0
+                    }
+                ]
+            },
+            {
+                "name": "chaos",
+                "liked": 2,
+                "level": 1,
+                "content": "<p>3<span class=\"mathquill-embedded-latex\" style=\"width:57.2188px;height:58.6534px;\">\\matrix{21}{312}{2}<\/span><\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 1,
+                "id": 17,
+                "able_id": 3,
+                "created_at": "1593702794",
+                "thumbs": 0,
+                "replies": [
+                    {
+                        "id": 27,
+                        "level": 2,
+                        "liked": 0,
+                        "reply_to_name": "chaos",
+                        "user_id": 1,
+                        "name": "chaos",
+                        "content": "<p><img src=\"http:\/\/img.baidu.com\/hi\/ldw\/w_0002.gif\" alt=\"w_0002.gif\" \/><\/p>",
+                        "able_id": 17,
+                        "root_id": 17,
+                        "reply_to": 1,
+                        "thumbs": 0
+                    }
+                ]
+            },
+            {
+                "name": "chaos",
+                "liked": 1,
+                "level": 1,
+                "content": "<p><span>\u200d<\/span><span class=\"mathquill-embedded-latex edui-formula-active\" style=\"width:49.6193px;height:58.6534px;\">\\matrix{12}{23}{3}<\/span><\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 0,
+                "id": 18,
+                "able_id": 3,
+                "created_at": "1593702914",
+                "thumbs": 0,
+                "replies": []
+            },
+            {
+                "name": "chaos",
+                "liked": 0,
+                "level": 1,
+                "content": "<p><br \/><span class=\"mathquill-embedded-latex\" style=\"width:49.7472px;height:33.5114px;\">\\sqrt[23]{1}<\/span><\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 0,
+                "id": 19,
+                "able_id": 3,
+                "created_at": "1593703032",
+                "thumbs": 0,
+                "replies": []
+            },
+            {
+                "name": "chaos",
+                "liked": 0,
+                "level": 1,
+                "content": "<p><span class=\"mathquill-embedded-latex\" style=\"width:27.1761px;height:30.642px;\">\\overleftarrow{ab}<\/span><\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 0,
+                "id": 20,
+                "able_id": 3,
+                "created_at": "1593703075",
+                "thumbs": 0,
+                "replies": []
+            },
+            {
+                "name": "chaos",
+                "liked": 1,
+                "level": 1,
+                "content": "<p><br \/><span class=\"mathquill-embedded-latex\" style=\"width:34.0227px;height:39.25px;\">\\oint_2^1<\/span><\/p>",
+                "user_id": 1,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/weichat\/9d08925834e14db00af128c1aa63fcae.png",
+                "reply_to": 1,
+                "commented": 0,
+                "id": 21,
+                "able_id": 3,
+                "created_at": "1593764869",
+                "thumbs": 0,
+                "replies": []
+            },
+            {
+                "name": "youLookLikeDelicious",
+                "liked": 0,
+                "level": 1,
+                "content": "<p><span class=\"mathquill-embedded-latex\" style=\"width:56.6875px;height:44px;\">_{n\\to\\infty}^{\\lim}<\/span><\/p>",
+                "user_id": 2,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/github\/fb4dca7d2d773703e584ec6772a88b55.png",
+                "reply_to": 2,
+                "commented": 0,
+                "id": 33,
+                "able_id": 3,
+                "created_at": "1597468440",
+                "thumbs": 0,
+                "replies": []
+            },
+            {
+                "name": "youLookLikeDelicious",
+                "liked": 0,
+                "level": 1,
+                "content": "<p><img src=\"http:\/\/img.baidu.com\/hi\/jx2\/j_0007.gif\" alt=\"j_0007.gif\" \/><\/p>",
+                "user_id": 2,
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/github\/fb4dca7d2d773703e584ec6772a88b55.png",
+                "reply_to": 2,
+                "commented": 0,
+                "id": 35,
+                "able_id": 3,
+                "created_at": "1597468664",
+                "thumbs": 0,
+                "replies": []
+            }
+        ],
+        "commented": 14,
+        "hasMoreComments": false,
+        "article": {
+            "identity": "3",
+            "content": "<p>Vue\u6a21\u677f<\/p><pre>&lt;template&gt;\n  &lt;!--  \u6587\u7ae0test\u5217\u8868--&gt;\n  &lt;div class=&quot;article-list-wrap&quot;&gt;\n    &lt;h4&gt;\n      &lt;nuxt-link to=&quot;\/article\/create-article&quot; title=&quot;\u65b0\u5efa\u6587\u7ae0&quot;&gt;\n        \u65b0\u5efa\u6587\u7ae0 [+]\n      &lt;\/nuxt-link&gt;\n    &lt;\/h4&gt;\n    &lt;ul class=&quot;article-list&quot;&gt;\n      &lt;li v-for=&quot;(item, index) in articleList&quot; :key=&quot;index&quot;&gt;\n        &lt;a href=&quot;#&quot;&gt;{{ item.title }}&lt;\/a&gt;\n        &lt;p&gt;\n          &lt;nuxt-link class=&quot;icofont-edit&quot; :to=&quot;&#39;\/article\/create-article\/&#39;+item.id&quot;&gt;\n            \u7f16\u8f91\n          &lt;\/nuxt-link&gt;\n          &lt;a class=&quot;icofont-delete&quot; href=&quot;\/&quot; @click.stop.prevent @click=&quot;deleteArticle(index)&quot;&gt;\n            \u5220\u9664\n          &lt;\/a&gt;\n          &lt;span class=&quot;icofont-eye&quot;&gt;{{ &#39; &#39; + item.visited }}&lt;\/span&gt;\n          &lt;span class=&quot;icofont-speech-comments&quot;&gt;{{ &#39; &#39; + item.commented }}&lt;\/span&gt;\n        &lt;\/p&gt;\n      &lt;\/li&gt;\n    &lt;\/ul&gt;\n    &lt;!-- \u5206\u9875\u4fe1\u606f --&gt;\n    &lt;pagination :page-info=&quot;pageInfo&quot; @changePage=&quot;getArticleList&quot; \/&gt;\n    &lt;div v-if=&quot;emptyData&quot; class=&quot;empty-data&quot;&gt;\n      \u7a7a\u7a7a\u5982\u4e5f\n    &lt;\/div&gt;\n  &lt;\/div&gt;\n&lt;\/template&gt;\n\n&lt;script&gt;\nexport default {\n  name: &#39;ArticleList&#39;,\n  data () {\n    return {\n      emptyData: false,\n      articleList: [],\n      pageInfo: &#39;&#39;\n    }\n  },\n  mounted () {\n    this.getArticleList()\n  },\n  methods: {\n    \/**\n     * \u9884\u89c8\u6587\u7ae0\n     *\/\n    previewArticle () {\n    },\n    \/**\n     * \u83b7\u53d6\u6587\u7ae0\u5217\u8868\n     * @param p \u5f53\u524d\u9875\n     *\/\n    getArticleList (p) {\n      p = p || 1\n      this.$axios({\n        method: &#39;GET&#39;,\n        url: `admin\/article-list\/${this.$route.params.id}?p=${p}`\n      }).then((response) =&gt; {\n        \/\/ \u83b7\u53d6\u6210\u529f\uff0c\u5c06\u5c5e\u6027\u8d4b\u503c\u7ed9\u6a21\u578b\n        const data = response.data.data\n        this.articleList = data.records\n        this.pageInfo = data.pagination\n\n        \/\/ \u5224\u65ad\u662f\u5426\u6709\u6570\u636e\n        if (!this.articleList.length) {\n          this.emptyData = true\n        }\n      }).catch((e) =&gt; {\n        \/\/ \u83b7\u53d6\u5931\u8d25\n      })\n    },\n    \/**\n     * \u5220\u9664\u4e00\u7bc7\u6587\u7ae0\n     *\n     * @param index \u6587\u7ae0\u5217\u8868\u7d22\u5f15\n     *\/\n    deleteArticle (index) {\n      if (!confirm(&#39;\u786e\u5b9a\u8981\u5220\u9664\u5417&#39;)) {\n        return\n      }\n\n      this.$axios({\n        method: &#39;POST&#39;,\n        data: {\n          id: this.articleList[index].id\n        },\n        url: &#39;admin\/article-delete&#39;\n      }).then(() =&gt; {\n        \/\/ \u5220\u9664\u6210\u529f\n        this.articleList.splice(index, 1)\n      }).catch(() =&gt; {\n        \/\/ \u5220\u9664\u5931\u8d25\n      })\n    }\n  }\n}\n&lt;\/script&gt;\n\n&lt;style lang=&quot;scss&quot;&gt;\n  .article-list{\n    p{\n      a{\n        margin-right: .7rem;\n      }\n    }\n    span{\n      font-size: 1.4rem;\n    }\n  }\n&lt;\/style&gt;<\/pre><p><br\/><\/p>",
+            "description": "\u63cf\u8ff0",
+            "user_id": 2,
+            "title": "Nuxt",
+            "gallery_id": 2,
+            "visited": 456,
+            "commented": 14,
+            "keywords": "keywords",
+            "liked": -8,
+            "created_at": 1582274433,
+            "updated_at": 1597389028,
+            "author": {
+                "id": 2,
+                "name": "youLookLikeDelicious",
+                "avatar": "http:\/\/www.blog1997.com\/image\/avatar\/github\/fb4dca7d2d773703e584ec6772a88b55.png"
+            },
+            "gallery": {
+                "url": "https:\/\/www.blog1997.com\/image\/gallery\/2019-11-06\/365.056133001575dc2d5150db4f0.52988517.jpg",
+                "id": 2
+            },
+            "thumbs": false
+        }
+    }
+}

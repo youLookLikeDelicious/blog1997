@@ -1,19 +1,42 @@
-html, body, div, p, table, tr, td, ul, ul li, input, img, h1, h2 ,h3, h4, h5, span, i, article, select, select option,section, header, textarea, br, hr, dl, dl dd, dl, dt{margin:0; padding: 0}
-body{background: #e6ecf0; font-family: "Microsoft YaHei","SimSun",sans-serif}
+html, body, div, p, table, tr, td, ul, ul li, input, img, h1, h2 ,h3, h4, h5, span, svg ,i, article, table, td, tr, select, select option,section, header, textarea, br, hr, dl, dl dd, dl, dt{margin:0; padding: 0}
+body{ width: 100%; overflow-x: hidden;}
 html, body, img{border: 0}
 a, a:hover, a:link, a:visited{
   color: inherit;
   text-decoration: none;
 }
-textarea{
+textarea, div, article， div{
   box-sizing: border-box;
 }
 html{
   font-size: 62.5%;
+  background: $html-background-color;
+  font-family: -apple-system,BlinkMacSystemFont,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: $html-color;
+  scroll-behavior:smooth;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 1rem;
+    height: 100%;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f6f6f6; 
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @include compatible-style('', ('background-image': linear-gradient(to bottom right, #29bdd9, #276ace)) );
+    border-radius: 10px;
+    box-shadow: .2rem .2rem .5rem #29bdd9;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    @include compatible-style('', ('background-image': linear-gradient(to bottom right, #276ace, #29bdd9)) );
+  }
 }
-.div{
-  box-sizing: border-box;
-}
+
 .clear{
   &:after{
     content: '';
@@ -25,20 +48,133 @@ html{
   }
 }
 ::-webkit-selection{
-  background: #99CCFF
+  background: $selection-color
 }
 ::-moz-selection{
-  background: #99CCFF
+  background: $selection-color
 }
 ::-ms-selection{
-  background: #99CCFF
+  background: $selection-color
 }
 ::selection{
-  background: #99CCFF
+  background: $selection-color
 }
-.container{
-  max-width: 81.4rem;
-  margin: 0 auto;
-  padding: 4rem 5rem;
-  box-sizing: border-box;
+
+//没有记录时的提示样式
+.there-is-no-more{
+  text-align: center;
+  margin-bottom: 2.4rem;
+}
+.relative-position{
+  position: relative;
+}
+.absolute-position{
+  position: absolute;
+}
+.right-arrow-svg{
+  width: 5rem;
+  height: 3rem;
+  position: absolute;
+  top: -.3rem;
+  left: 6rem;
+  transition-duration: 128ms;
+  &:hover{
+      left: 6.3rem;
+  }
+}
+.font-size-14rem{
+  font-size: 1.4rem;
+}
+.color-777{
+  color: #777;
+}
+.hid-overflow{
+  overflow: hidden;
+}
+.clear-float{
+  &:after{
+    content:'';
+    display: block;
+    clear: both;
+  }
+  &:before{
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+.float-left{
+  float: left;
+}
+
+.float-right{
+  float: right;
+}
+.display-none{
+  display: none;
+}
+.display-inline-block{
+  display: inline;
+}
+.text-algin-center{
+  text-align: center;
+}
+.text-algin-right{
+  text-align: right;
+}
+.submit-btn{
+  @extend %submit-btn;
+}
+.deny-submit-btn{
+  @extend %btn;
+  background-color: #c6c6c6;
+}
+.color-white{
+  color: #fff !important;
+}
+.vertical-align-middle{
+  vertical-align: middle;
+}
+// 切换页面进进度条样式
+.nuxt-progress{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.background-color-white{
+  background-color: #fff;
+}
+.inline-block{
+  display: inline-block;
+}
+
+.enhanced-image{
+  animation: enhance-image 2s forwards;
+}
+
+@keyframes enhanced-image {
+  from {
+    filter: blur(20px);
+  }
+  to {
+    filter: blur(0);
+  }
+}
+.flex{
+  display: flex;
+}
+
+.help-tag{
+  $dimension: 1.3rem;
+  background-image: url('../image/question-circle.svg');
+  display: inline-block;
+  width: $dimension;
+  height: $dimension;
+  background-size: cover;
+}
+
+.btn-disable {
+  opacity: .6;
+  cursor: not-allowed;
 }
