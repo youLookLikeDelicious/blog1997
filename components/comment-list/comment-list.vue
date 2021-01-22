@@ -15,7 +15,7 @@
         <section><span class="clear" /><span>#{{ index + 1 }}</span></section>
         <div class="comment-content">
           <div class="stamp relative-position">
-            <avatar :src="comment.avatar" :alt="comment.name" />
+            <avatar :src="comment.user.avatar" :alt="comment.name" />
             <svg class="absolute-position" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink">
               <defs>
                 <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -35,7 +35,7 @@
                 r="30"
               />
             </svg>
-            <p><span>{{ comment.name }}</span> <span>{{ comment.created_at | dateFormat }}</span> </p>
+            <p><span>{{ comment.user.name }}</span> <span>{{ comment.created_at | dateFormat }}</span> </p>
           </div>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div class="reply-content" v-html="comment.content" />
@@ -116,13 +116,24 @@
             </div>
           </dd>
         </dl>
-        <div class="more-comments">
+        <div class="more-reply">
           <a v-if="comment.commented > comment.replies.length" href="/" @click.prevent @click="getMoreReply($event, comment.id, comment.replies.length)">显示更多>></a>
         </div>
       </div>
       <div />
       <!-------------------------------- 评论的回复 end ---------------------------- -->
     </article>
+    <!-- 获取更多评论 begin -->
+    <div
+      v-if="p < pages"
+      class="more-comments"
+    >
+      <a
+        href="/"
+        @click.prevent="$emit('getMoreComments', p + 1)"
+      >获取更多评论 <i class="icofont-caret-down" /></a>
+    </div>
+    <!-- 获取更多评论 end -->
     <!-------------------------------- 富文本编辑器 begein ---------------------------- -->
     <div ref="replyEditorBox" class="reply-editor-box" slideTo="120">
       <umeditor
@@ -158,6 +169,18 @@ export default {
       type: Array,
       default () {
         return []
+      }
+    },
+    p: {
+      type: Number,
+      default () {
+        return 0
+      }
+    },
+    pages: {
+      type: Number,
+      default () {
+        return 0
       }
     }
   },
@@ -303,10 +326,10 @@ export default {
      */
     getReplyRelaction (reply) {
       if (reply.level === 2) {
-        return `${reply.name} 回复: `
+        return `${reply.user.name} 回复: `
       }
 
-      return `${reply.name}-回复-${reply.reply_to_name}: `
+      return `${reply.user.name}-回复-${reply.receiver.name}: `
     },
     /**
      * 获取更多的回复
@@ -351,9 +374,6 @@ export default {
     padding: 0 0rem 1.7rem 0rem;
     position: relative;
     border-radius: .3rem;
-    .more-comments {
-        text-align: center;
-    }
     .reply-menu{
         font-size: 1.2rem;
         color: $fade-color;
@@ -520,5 +540,18 @@ export default {
         content: '';
         clear: both;
     }
+}
+.more-comments {
+  text-align: center;
+  a {
+    color: rgb(38, 146, 235);
+    transition: color .5s;
+    &:hover{
+      color: rgb(97, 172, 233);
+    }
+    &:active {
+      color: rgb(2, 127, 230);
+    }
+  }
 }
 </style>

@@ -15,6 +15,12 @@
         "created_at": "1610254184",
         "id": 42,
         "replies": [],
-        "thumbs": 0
+        "thumbs": 0,
+        "user": {
+            "name": "blog1997:e2e"
+        },
+        "receiver": {
+            "name": "receiver"
+        }
     }
 }

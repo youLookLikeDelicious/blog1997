@@ -13,6 +13,12 @@
         "created_at": "1598172027",
         "id": 36,
         "thumbs": 0,
-        "replies": []
+        "replies": [],
+        "user": {
+            "name": "blog1997:e2e"
+        },
+        "receiver": {
+            "name": "receiver"
+        }
     }
 }

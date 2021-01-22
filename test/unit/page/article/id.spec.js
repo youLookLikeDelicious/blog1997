@@ -239,7 +239,8 @@ describe('test article page', () => {
             thumbs: false,
             liked: 1
           },
-          hasMoreComments: false,
+          p: 1,
+          pages: 1,
           records: ['records']
         }
       },
@@ -263,23 +264,10 @@ describe('test article page', () => {
     vm.setUM('k')
     expect(vm.UM).toBe('k')
 
-    // 不期望 渲染 获取更多评论按钮
-    let getMoreCommentsBtn = wrapper.find('.more-comments > a')
-    expect(getMoreCommentsBtn.exists()).toBeFalsy()
-
     // 测试appendComments方法
-    expect(vm.hasMoreComments).toBeFalsy()
-    vm.appendComments({ hasMoreComments: true, records: ['appended comment'] })
+    vm.appendComments({ p: 2, pages: 2, records: ['appended comment'] })
     await localVue.nextTick()
     expect(vm.records).toEqual(expect.arrayContaining(['records', 'appended comment']))
-    expect(vm.hasMoreComments).toBe(true)
-
-    // ---------------获取 获取更多评论按钮
-    getMoreCommentsBtn = wrapper.get('.more-comments > a')
-    await getMoreCommentsBtn.trigger('click')
-    await localVue.nextTick()
-    expect(vm.article.identity).toBe(1)
-    expect(vm.$axios.post).toHaveBeenCalledWith('/article/comments/1?p=2')
 
     // 测试thumbUp
     expect(vm.article.thumbs).toBe(false)
@@ -384,7 +372,8 @@ describe('test article page', () => {
             thumbs: false,
             liked: 1
           },
-          hasMoreComments: false
+          p: 1,
+          pages: 1
         }
       },
       mocks: {

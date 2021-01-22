@@ -33,7 +33,14 @@ const comments = [
     content: 'comment content',
     created_at: 1593570465,
     id: 11,
-    name: 'user name',
+    p: 1,
+    pages: 1,
+    user: {
+      name: 'user name'
+    },
+    receiver: {
+      name: 'receiver'
+    },
     level: 1,
     liked: 1,
     reply_to: 1,
@@ -49,7 +56,12 @@ const comments = [
         name: 'reply-name-level-2',
         user_id: 2,
         id: 27,
-        reply_to_name: 'reply_to_name'
+        user: {
+          name: 'user name'
+        },
+        receiver: {
+          name: 'receiver'
+        }
       },
       {
         able_id: 11,
@@ -60,7 +72,12 @@ const comments = [
         user_id: 1,
         id: 27,
         name: 'reply-name-level-3',
-        reply_to_name: 'reply_to_name'
+        user: {
+          name: 'user name'
+        },
+        receiver: {
+          name: 'receiver'
+        }
       },
       {
         able_id: 11,
@@ -71,7 +88,12 @@ const comments = [
         user_id: 1,
         id: 27,
         name: 'reply-name-level-3',
-        reply_to_name: 'reply_to_name'
+        user: {
+          name: 'user name'
+        },
+        receiver: {
+          name: 'receiver'
+        }
       }
     ]
   },
@@ -87,7 +109,13 @@ const comments = [
     reply_to: 1,
     thumbs: 0,
     user_id: 1,
-    replies: []
+    replies: [],
+    user: {
+      name: 'user name'
+    },
+    receiver: {
+      name: 'receiver'
+    }
   }
 ]
 
@@ -160,6 +188,7 @@ describe('test comment list component', () => {
       }
     })
 
+    await localVue.nextTick()
     const $el = wrapper.vm.$el
     // 有评论数据
     // 1、期望$el的className = 'comment-list comment-list-wrap'
@@ -177,7 +206,7 @@ describe('test comment list component', () => {
     const avatarComponent = (wrapper.findComponent(avatar))
     expect(avatarComponent.exists()).toBe(true)
     // 2、测试用户名
-    expect(commentContent.querySelector('.stamp > p').innerHTML).toContain(comments[0].name)
+    expect(commentContent.querySelector('.stamp > p').innerHTML).toContain(comments[0].user.name)
     // 3、测试用评论事件
     expect(commentContent.querySelector('.stamp > p').innerHTML).toContain(dateFormat(comments[0].created_at))
     // 4、测试评论的内容
@@ -194,16 +223,18 @@ describe('test comment list component', () => {
     // 测试评论的回复 comment level = 2
     const dls = articles[0].querySelectorAll('dl')
     // 1、测试用户信息部分
-    expect(dls[0].querySelector('dt').innerHTML).toBe(comments[0].replies[0].name + '-回复-reply_to_name: ')
+    expect(dls[0].querySelector('dt').innerHTML).toBe(comments[0].replies[0].user.name + '-回复-receiver: ')
     expect(dls[0].querySelector('.reply-content').innerHTML).toBe(comments[0].replies[0].content)
 
     // 测试评论的回复 comment level = 3
-    expect(dls[1].querySelector('dt').innerHTML).toBe(`${comments[0].replies[1].name}-回复-${comments[0].replies[1].reply_to_name}: `)
+    expect(dls[1].querySelector('dt').innerHTML).toBe(`${comments[0].replies[1].user.name}-回复-${comments[0].replies[1].receiver.name}: `)
     expect(dls[1].querySelector('.reply-content').innerHTML).toBe(comments[0].replies[1].content)
 
     // 该评论的回复数量 === 评论的.commented,不希望显示.more-comments下的 阅读更多标签
-    expect($el.querySelector('.more-comments').querySelector('a')).toBeFalsy()
-    wrapper.setProps({
+    expect($el.querySelector('.more-comments')).toBeFalsy()
+    await wrapper.setProps({
+      p: 1,
+      pages: 2,
       comments: [
         {
           avatar: 'avatar',
@@ -212,7 +243,12 @@ describe('test comment list component', () => {
           content: 'comment content',
           created_at: 1593570465,
           id: 11,
-          name: 'user name',
+          user: {
+            name: 'user name'
+          },
+          receiver: {
+            name: 'receiver'
+          },
           level: 1,
           liked: 1,
           reply_to: 1,
@@ -225,10 +261,14 @@ describe('test comment list component', () => {
               level: 2,
               liked: 0,
               thumbs: 0,
-              name: 'reply-name-level-2',
               user_id: 2,
               id: 27,
-              reply_to_name: 'reply_to_name'
+              user: {
+                name: 'user name'
+              },
+              receiver: {
+                name: 'receiver'
+              }
             },
             {
               able_id: 11,
@@ -238,21 +278,23 @@ describe('test comment list component', () => {
               thumbs: 0,
               user_id: 1,
               id: 27,
-              name: 'reply-name-level-3',
-              reply_to_name: 'reply_to_name'
+              user: {
+                name: 'user name'
+              },
+              receiver: {
+                name: 'receiver'
+              }
             }
           ]
         }
       ]
     })
-    // 该评论的回复数量 === 评论的.commented,希望显示.more-comments下的 阅读更多标签
 
-    await expect(wrapper.get('.more-comments')).toBeTruthy()
+    // 希望显示.more-comments下的 阅读更多标签
+    expect(wrapper.get('.more-comments')).toBeTruthy()
     // 期望点击 阅读更多标签，会触发自定义事件
     await wrapper.get('.more-comments > a').trigger('click')
-    expect(wrapper.emitted().getMoreReply).toBeTruthy()
-    // 期望 emit 附带相关的参数
-    expect(wrapper.emitted().getMoreReply[0][0]).toEqual({ rootId: 11, offset: 2 })
+    expect(wrapper.emitted().getMoreComments).toBeTruthy()
   })
 
   it('test component event when user not login', async () => {

@@ -18,7 +18,7 @@ const features = [
 ].join('%2C')
 
 export default {
-  mode: 'universal',
+  ssr: true,
   env: env.parsed,
   /*
   ** Headers of the page

@@ -101,11 +101,12 @@
       </div>
     </header>
     <div class="article-container">
-      <article ref="article-wrap" class="article-content-wrap relative-position">
+      <article class="article-content-wrap relative-position">
         <!--------------------------------------------标题等信息 end-------------------------------------------->
         <!----------------------------------------------文章主体------------------------------------------------>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div
+          ref="article"
           class="article-content"
           v-html="$initHTML(article)"
         />
@@ -183,20 +184,14 @@
         <!--------------------------------------------文章评论列表开始-------------------------------------------->
         <div class="article-comments">
           <commentList
+            :p="p"
+            :pages="pages"
             :comments="records"
+            @getMoreComments="getComments"
             @getMoreReply="getMoreReply"
             @appendReply="appendReply"
             @deleteComment="deleteComment"
           />
-          <div
-            v-if="records.length && hasMoreComments"
-            class="more-comments"
-          >
-            <a
-              href="/"
-              @click.prevent="getComments"
-            >查看更多</a>
-          </div>
         </div>
       <!--------------------------------------------文章评论列表结束-------------------------------------------->
       </article>
@@ -230,7 +225,8 @@ export default {
       },
       commented: 0,
       UM: undefined,
-      hasMoreComments: false,
+      p: 0,
+      pages: 0,
       records: [],
       processBarPercent: '0%', // 进度条进度
       cateList: [], // 目录信息
@@ -372,22 +368,21 @@ export default {
      * 追加评论
      * @param obj
      */
-    appendComments ({ hasMoreComments, records }) {
+    appendComments ({ p, pages, records }) {
       if (Array.isArray(records)) {
         this.records = this.records.concat(records)
       }
-      this.hasMoreComments = hasMoreComments
+      this.p = p
+      this.pages = pages
     },
     /**
      * 获取更多的评论
      * @param  {string} type
      */
     getComments (type = 'article') {
-      const p = Math.ceil(this.records.length / 10 + 1)
-
       // 开始请求
       this.$axios
-        .post(`/article/comments/${this.article.identity}?p=${p}`)
+        .post(`/article/comments/${this.article.identity}?p=${this.p + 1}`)
         .then(response => response.data.data)
         .then((comments) => {
           this.appendComments(comments)
@@ -424,9 +419,10 @@ export default {
       this.processBarPercent =
         (scrollTop / (offsetHeight - clientHeight)) * 100 + '%'
 
-      const articleEl = this.$refs['article-wrap']
+      const articleEl = this.$refs.article
+      const offsetTop = articleEl.offsetTop + articleEl.parentElement.offsetTop
       // 更改目录的position
-      if ((articleEl.offsetTop + 100) < scrollTop && scrollTop < (articleEl.offsetTop + articleEl.offsetHeight)) {
+      if ((offsetTop + 100) < scrollTop && scrollTop < (offsetTop + articleEl.offsetHeight)) {
         this.setFixCatelist(true)
       } else {
         this.setFixCatelist(false)
@@ -798,9 +794,5 @@ export default {
 }
 .article-main-wrap {
   max-width: 100%;
-}
-.more-comments{
-  margin: 0 auto;
-  text-align: center;
 }
 </style>

@@ -1,0 +1,29 @@
+#
+# Install vendor package
+#
+FROM node:10.23-alpine3.9 as build
+
+# Install git
+RUN apk add --no-cache git \
+    python make g++
+
+# Set bit registry
+RUN npm config set @bit:registry https://node.bit.dev
+
+COPY . /app
+COPY ./package-product.json /app/package.json
+RUN cd /app && npm install  && npm run build
+
+#
+# Build application
+#
+FROM node:10.23-alpine3.9
+
+ENV NODE_ENV=production NODE_PATH=/usr/local/lib/node_modules
+COPY . /var/www
+COPY ./package-product.json /var/www/package.json
+COPY --from=build /app/static/ /var/www/static
+COPY --from=build /app/.nuxt/ /var/www/.nuxt
+RUN cd /var/www && npm i --product
+# RUN echo nginx www.blog1997.com >> /etc/hosts 总感觉这样配置不好
+WORKDIR /var/www

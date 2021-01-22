@@ -9,6 +9,7 @@ export default axios.create({
 axios.defaults.baseURL = process.env.BASE_URL
 axios.defaults.withCredentials = true
 
+// 开发模式中忽略证书验证
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false })
 }

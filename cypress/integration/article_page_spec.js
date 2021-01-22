@@ -2,7 +2,9 @@ describe('test article page', () => {
   [{ width: 768, height: 1000 }, { width: 1200, height: 1000 }].forEach((size) => {
     it('visit article detail page', () => {
       cy.intercept('POST', '/api/oauth/currentUser', { fixture: 'user-login' }).as('getCurrentUser')
-      // 定义评论的fixture
+      // 文章评论
+      cy.intercept('post', /\/article\/comments\/ODM=\?p=1/, { fixture: 'article-comments' }).as('article.comments')
+      // 添加删除的fixture
       cy.intercept('POST', '/api/comment', (req) => {
         const fixture = req.body.able_type === 'article' ? 'create-comment' : 'create-comment-reply'
         req.reply({ fixture })
@@ -12,11 +14,11 @@ describe('test article page', () => {
       cy.intercept('POST', '/api/report-illegal-info', 'fixture:report-illegal-info').as('reportIllegalInfo')
       // 定义点赞操作的fixture
       cy.intercept('POST', '/api/thumb-up', 'fixture:thumb-up').as('thumbUp')
-      cy.intercept('get', Cypress.env('host') + '/api/article/ODM=', { fixture: 'article-odm=' })
-      cy.intercept('get', Cypress.env('host') + '/image/gallery/2020-12-09/73.0739020016085fd09025120bb4.45066014.jpg', { fixture: 'images/gallery' })
-      cy.viewport(size.width, size.height).visit(Cypress.env('host') + '/article/ODM=')
+      cy.intercept('get', '/api/article/ODM=', { fixture: 'article-odm=' })
+      cy.intercept('get', '/image/gallery/2020-12-09/73.0739020016085fd09025120bb4.45066014.jpg', { fixture: 'images/gallery' })
+      cy.viewport(size.width, size.height).visit('/article/ODM=')
 
-      cy.wait('@getCurrentUser')
+      cy.wait(['@getCurrentUser', '@article.comments'])
       // 测试举报按钮
       cy.get('.article-sub-btn').scrollIntoView({ duration: 100, offset: { top: 200 } })
       cy.wait(500)

@@ -52,9 +52,6 @@ describe('test leave message page', () => {
   })
 
   it('test with predefined data', () => {
-    window.addHandler = jest.fn()
-    window.removeHandler = jest.fn()
-
     const store = new Vuex.Store({
       modules: {
         user: {
@@ -78,7 +75,12 @@ describe('test leave message page', () => {
               content: 'comment content',
               created_at: 1593570465,
               id: 11,
-              name: 'user name',
+              user: {
+                name: 'user'
+              },
+              receiver: {
+                name: 'receiver'
+              },
               level: 1,
               liked: 1,
               reply_to: 1,
@@ -91,10 +93,14 @@ describe('test leave message page', () => {
                   level: 3,
                   liked: 0,
                   thumbs: 0,
-                  name: 'reply-name-level-2',
+                  user: {
+                    name: 'user'
+                  },
+                  receiver: {
+                    name: 'receiver'
+                  },
                   user_id: 2,
-                  id: 27,
-                  reply_to_name: 'reply_to_name'
+                  id: 27
                 },
                 {
                   able_id: 11,
@@ -104,8 +110,12 @@ describe('test leave message page', () => {
                   thumbs: 0,
                   user_id: 1,
                   id: 27,
-                  name: 'reply-name-level-3',
-                  reply_to_name: 'reply_to_name'
+                  user: {
+                    name: 'user'
+                  },
+                  receiver: {
+                    name: 'receiver'
+                  }
                 },
                 {
                   able_id: 11,
@@ -115,8 +125,12 @@ describe('test leave message page', () => {
                   thumbs: 0,
                   user_id: 1,
                   id: 27,
-                  name: 'reply-name-level-3',
-                  reply_to_name: 'reply_to_name'
+                  user: {
+                    name: 'user'
+                  },
+                  receiver: {
+                    name: 'receiver'
+                  }
                 }
               ]
             },
@@ -132,7 +146,13 @@ describe('test leave message page', () => {
               reply_to: 1,
               thumbs: 0,
               user_id: 1,
-              replies: []
+              replies: [],
+              user: {
+                name: 'user'
+              },
+              receiver: {
+                name: 'receiver'
+              }
             }
           ],
           commented: 100
@@ -140,17 +160,10 @@ describe('test leave message page', () => {
       }
     })
 
-    expect(window.addHandler).toHaveBeenCalledWith(wrapper.vm.UM.body, 'click', wrapper.vm.umClickHandler)
-    expect(window.addHandler).toHaveBeenCalledWith(window, 'click', wrapper.vm.windowClickHandler)
     // 有留言记录，期望显示评论列表
     expect(wrapper.findComponent({ name: 'commentList' }).exists()).toBeTruthy()
     // 期望显示留言记录
     expect(wrapper.get('.leave-message-count').html()).toContain('共 <span>100</span> 条留言')
-
-    // 测试destroy事件
-    wrapper.vm.$destroy()
-    expect(window.removeHandler).toHaveBeenCalledWith(wrapper.vm.UM.body, 'click', wrapper.vm.umClickHandler)
-    expect(window.removeHandler).toHaveBeenCalledWith(window, 'click', wrapper.vm.windowClickHandler)
   })
 
   const setPromptMessage = jest.fn()
@@ -174,9 +187,8 @@ describe('test leave message page', () => {
    * 测试组件的 methods
    */
   it('test component method', async () => {
-    const post = jest.fn(() => Promise.resolve({ data: { data: {} } }))
-
-    // mock initFormula
+    const post = jest.fn(() => Promise.resolve({ data: { data: { user: '' } } }))
+    const get = jest.fn(() => Promise.resolve({ data: { data: { records: [], p: 2, pages: 2 } } }))
 
     const wrapper = mount(leaveMessage, {
       store,
@@ -191,47 +203,16 @@ describe('test leave message page', () => {
               content: 'comment content',
               created_at: 1593570465,
               id: 11,
-              name: 'user name',
+              user: {
+                name: 'user'
+              },
+              receiver: {
+                name: 'receiver'
+              },
               level: 1,
               liked: 1,
               reply_to: 1,
-              thumbs: 0,
-              user_id: 1,
-              replies: [
-                {
-                  able_id: 11,
-                  content: '第一条评论的回复 level 2',
-                  level: 3,
-                  liked: 0,
-                  thumbs: 0,
-                  name: 'reply-name-level-2',
-                  user_id: 2,
-                  id: 27,
-                  reply_to_name: 'reply_to_name'
-                },
-                {
-                  able_id: 11,
-                  content: '第一条评论的回复 level 3',
-                  level: 3,
-                  liked: 0,
-                  thumbs: 0,
-                  user_id: 1,
-                  id: 27,
-                  name: 'reply-name-level-3',
-                  reply_to_name: 'reply_to_name'
-                },
-                {
-                  able_id: 11,
-                  content: '第一条评论的回复 level 2',
-                  level: 2,
-                  liked: 0,
-                  thumbs: 0,
-                  user_id: 1,
-                  id: 27,
-                  name: 'reply-name-level-3',
-                  reply_to_name: 'reply_to_name'
-                }
-              ]
+              thumbs: 0
             },
             {
               avatar: '头像',
@@ -244,8 +225,13 @@ describe('test leave message page', () => {
               liked: 1,
               reply_to: 1,
               thumbs: 0,
-              user_id: 1,
-              replies: []
+              replies: [],
+              user: {
+                name: 'user'
+              },
+              receiver: {
+                name: 'receiver'
+              }
             }
           ],
           commented: 100
@@ -253,18 +239,24 @@ describe('test leave message page', () => {
       },
       mocks: {
         $axios: {
-          post
+          post,
+          get
         }
       }
     })
 
-    // 设置提交的内容
-    wrapper.setData({
-      editorContent: 'leave-message'
-    })
     // 获取提交按钮
     const submitBtn = wrapper.find('.leave-message-btn-wrap > a')
-    // 点击提交按钮
+
+    // ---------- 没有数据的情况下 点击提交按钮
+    await submitBtn.trigger('click')
+    expect(setPromptMessage).toHaveBeenCalledWith({ }, { msg: '写点什么吧(●ˇ∀ˇ●)', status: false })
+
+    // ---------- 有数据的情况下点击提交按钮
+    // ---------- 设置提交的内容
+    await wrapper.setData({
+      editorContent: 'leave-message'
+    })
     await submitBtn.trigger('click')
     expect(post).toHaveBeenCalledWith('/comment', {
       content: 'leave-message',
@@ -272,49 +264,22 @@ describe('test leave message page', () => {
       able_type: 'Blog1997'
     })
 
-    wrapper.vm.UM.setContent('')
-    await submitBtn.trigger('click')
-    expect(setPromptMessage).toHaveBeenCalledWith({ }, { msg: '写点什么吧(●ˇ∀ˇ●)', status: false })
-
-    wrapper.vm.UM.setContent('test')
-    // 测试window的点击事件
-    const event = {
-      target: {
-        className: 'edui-icon-emotion edui-icon'
-      }
-    }
-    // 测试点击toolbar 和umeditor.body事件
-    wrapper.vm.windowClickHandler(event)
-    expect(wrapper.vm.editorContent).toBe('')
-    // 测试点击 .edui-editor-body富文本编辑区域事件
-    event.target.className = 'edui-editor-body'
-    wrapper.vm.windowClickHandler(event)
-    // 测试点击其他位置的事件 并且富文本内容为空的情况
-    event.target.className = ''
-    wrapper.vm.windowClickHandler(event)
-    // 测试点击其他位置的事件 并且富文本内容不为空的情况
-    wrapper.vm.UM.setContent('test')
-    wrapper.vm.windowClickHandler(event)
-    expect(wrapper.vm.UM.getContent()).toBe('test')
-
-    // 测试UMeditor编辑区域点击事件
-    const event2 = {
-      stopPropagation: jest.fn(),
-      cancelBubble: false
-    }
-    // 测试富文本中的内容和预定义的message一样的情况
-    wrapper.setData({
-      editorContent: wrapper.vm.message
+    // 测试富文本中的内容为空的情况
+    await wrapper.setData({
+      editorContent: ''
     })
-    wrapper.vm.umClickHandler(event2)
-    expect(event2.stopPropagation).toHaveBeenCalled()
-    expect(event2.cancelBubble).toBe(true)
-    expect(wrapper.vm.editorContent).toBe('')
+    expect(wrapper.get('.leave-message-placeholder').exists()).toBeTruthy()
 
-    // 测试富文本中的内容和预定义的message不一样的情况cancelBubble
-    wrapper.vm.UM.setContent('test')
-    wrapper.vm.umClickHandler(event2)
-    expect(wrapper.vm.UM.getContent()).toBe('test')
+    // 测试富文本中的内容不为空的情况
+    // 期望 .leave-message-placeholder不被渲染
+    await wrapper.setData({
+      editorContent: 'content'
+    })
+    expect(() => wrapper.get('.leave-message-placeholder')).toThrow()
+
+    // 测试 getMoreLeaveMessage
+    wrapper.vm.getMoreLeaveMessage()
+    expect(get).toHaveBeenCalledWith('leave-message?p=2')
   })
 
   it('test async data', async () => {
@@ -334,7 +299,7 @@ describe('test leave message page', () => {
     const $responseHandler = jest.fn(() => 'return value')
 
     let data = await leaveMessage.asyncData({ $responseHandler, app: { $axios }, res: 'res', req: 'req' })
-    expect($axios.get).toHaveBeenCalledWith('leave-message/index', 'req')
+    expect($axios.get).toHaveBeenCalledWith('leave-message', 'req')
     expect(data).toBe('return value')
     expect($responseHandler).toHaveBeenCalledWith('resolve', 'res')
 

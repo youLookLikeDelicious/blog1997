@@ -5,7 +5,7 @@
       <a href="/" @click.stop.prevent @click="toggleNavigate"><i class="icofont-navigation-menu" /></a>
     </div>
     <div class="logo">
-      BLog1997网络日志
+      BLog1997
     </div>
     <!--    左边部分-->
     <div ref="headerItem" data-display="flex" class="header-item">
@@ -153,22 +153,23 @@ export default {
     }
   }
   .navigate {
+    top: 0;
+    left: 0;
     width: 100%;
-    height: $nav-height;
-    font-size: 1.5rem;
-    box-sizing: border-box;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    word-break: keep-all;
     color: white;
+    z-index: 10000;
+    position: fixed;
+    font-size: 1.5rem;
+    height: $nav-height;
+    align-items: center;
+    word-break: keep-all;
+    box-sizing: border-box;
+    justify-content: space-between;
     // @include compatible-style('', ('background-image': linear-gradient(to right bottom,  #276ace, #29bdd9 )) );
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#303036);
     @include compatible-style('', ('background-image': linear-gradient(to right bottom,  $banner-color-1, $banner-color-2 )) );
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
+    box-shadow: 0 0.4rem 2.1rem rgba(102,102,102,0.1), 0 0.9rem 1.4rem rgba(102,102,102,0.1), 0 0.25rem 0.53rem rgba(102,102,102,0.5), 0 0.12rem 0.18rem rgba(102,102,102,0.1);
     div{
       display: flex;
       align-items: center;
@@ -286,7 +287,7 @@ export default {
         }
         ul li{
           height: $nav-height;
-          transition-duration: 0.3s;
+          transition-duration: 0.1s;
           flex-basis: 12rem;
           display: flex;
           flex: 1;
@@ -297,8 +298,9 @@ export default {
           border-bottom: 0;
           justify-content: center;
           &:hover{
-            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#c6c6c6);
-            @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-1, $btn-color-2 )) )
+            color: #00c6fb;
+            // filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#c6c6c6);
+            // @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-1, $btn-color-2 )) )
           }
           i{
             font-size: 2.3rem;
@@ -314,8 +316,9 @@ export default {
           }
         }
         .on{
-          filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#c6c6c6);
-          @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-1, $btn-color-2 )) );
+          color: #00c6fb;
+          // filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#c6c6c6);
+          // @include compatible-style('', ('background-image': linear-gradient(to bottom,  $btn-color-1, $btn-color-2 )) );
         }
       }
       .logo{

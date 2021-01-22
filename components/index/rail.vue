@@ -5,7 +5,7 @@
       <h2 class="bold-text">
         关于我
       </h2>
-      <img src="/nuxt-image/about-me/bear.jpg" alt="">
+      <img src="/nuxt-image/about-me/bear.png" alt="">
       <ul>
         <li>文章: {{ articleNum }}篇</li>
         <li>留言: {{ messageNum }}</li>
@@ -14,7 +14,7 @@
     </div>
     <ul v-if="popArticles.length" class="popular-article">
       <li class="bold-text">
-        点击排行
+        推荐文章
       </li>
       <li v-for="(article, index) in popArticles" :key="index">
         <span class="icofont-fire-burn fire-gradient" />
