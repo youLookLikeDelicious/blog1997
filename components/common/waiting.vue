@@ -36,7 +36,7 @@ export default {
   top: 0;
   left: -100rem;
   height: .6rem;
-  z-index: 9999;
+  z-index: 99999;
   width: 400rem;
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=yellow, endColorstr=red);
   @include compatible-style('', ('background-image': linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)) );
