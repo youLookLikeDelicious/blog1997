@@ -12,7 +12,6 @@ localVue.component('reportIllegalInfo', reportIllegalInfo)
 localVue.component('promptMessage', promptMessage)
 localVue.component('nuxt', nuxt)
 
-const getCurrentUser = jest.fn()
 
 const store = new Vuex.Store({
   modules: {
@@ -24,7 +23,6 @@ const store = new Vuex.Store({
     user: {
       namespaced: true,
       actions: {
-        getCurrentUser
       }
     }
   }
@@ -63,7 +61,6 @@ describe('Test layout', () => {
     expect(wrapper.findComponent({ name: 'Login' }).exists()).toBeTruthy()
     expect(wrapper.findComponent({ name: 'ReportIllegalInfo' }).exists()).toBeFalsy()
     expect($canUseWebp).toHaveBeenCalled()
-    expect(getCurrentUser).toHaveBeenCalled()
 
     let scrollTopBtn = wrapper.find('.scroll-to-top')
     expect(scrollTopBtn.exists()).toBeFalsy()

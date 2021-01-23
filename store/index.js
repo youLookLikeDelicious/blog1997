@@ -1,6 +1,7 @@
 const actions = {
   async nuxtServerInit ({ dispatch }, { req }) {
     await dispatch('globalState/getFriendLink', req)
+    await dispatch('user/getCurrentUser')
   }
 }
 

@@ -47,7 +47,6 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('user/getCurrentUser')
     window.$nuxt.context.app.$canUseWebp()
     document.addEventListener('scroll', this.scrollDocumentElement)
     this.$nextTick(this.$initializeHTML)
