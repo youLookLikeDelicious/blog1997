@@ -6,14 +6,16 @@ import articleInitAnimate from './article-init-animate/index'
 import currentUser from './current-user'
 import vender from './vendor'
 import lazy from './lazy-load/index.js'
-
-Vue.use(verify)
-Vue.use(vender)
-Vue.use(utile)
-Vue.use(articleInitAnimate)
-Vue.use(currentUser)
-Vue.use({
-  install (vue) {
-    vue.prototype.$lazy = lazy
-  }
-})
+export default function ({ $config, $axios }) {
+  Vue.use(verify)
+  Vue.use(vender)
+  Vue.use(utile)
+  Vue.use(articleInitAnimate)
+  Vue.use(currentUser)
+  Vue.use({
+    install (vue) {
+      vue.prototype.$lazy = lazy
+    }
+  })
+  $axios.defaults.baseURL = $config.clientBaseURL
+}

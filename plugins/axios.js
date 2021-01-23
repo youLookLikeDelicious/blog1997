@@ -6,7 +6,7 @@ export default axios.create({
   withCredentials: true
 })
 */
-axios.defaults.baseURL = process.env.BASE_URL
+// axios.defaults.baseURL = process.env.BASE_URL
 axios.defaults.withCredentials = true
 
 // 开发模式中忽略证书验证

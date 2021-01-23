@@ -71,10 +71,10 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/ctx-inject',
     { ssr: true, src: '~/plugins/ssr/index' },
     { ssr: false, src: '~/plugins/client/index' },
-    { ssr: false, src: '~/plugins/client-app/check-can-i-use/can-i-use-webp' },
-    '~/plugins/ctx-inject'
+    { ssr: false, src: '~/plugins/client-app/check-can-i-use/can-i-use-webp' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -90,8 +90,9 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-    baseURL: process.env.BASE_URL
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    clientBaseURL: process.env.CLIENT_BASE_URL
   },
   /*
   ** Build configuration
