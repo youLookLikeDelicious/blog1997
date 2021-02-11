@@ -92,7 +92,11 @@ export default {
   */
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
-    clientBaseURL: process.env.CLIENT_BASE_URL
+    clientBaseURL: process.env.CLIENT_BASE_URL,
+    weChatAppId: process.env.WEICHAT_APP_ID,
+    weChatRedirect: process.env.WEICHAT_REDIRECT,
+    gitClientId: process.env.GIT_CLIENT_ID,
+    gitCallBack: process.env.GIT_CALL_BACK
   },
   /*
   ** Build configuration

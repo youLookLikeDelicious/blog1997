@@ -32,7 +32,7 @@ export default {
         break
       // 使用微信登陆，授权成功的回调
       case 'weichat':
-        this.$axios.post('oauth/authorize?p=home&type=weichat&code=' + query.code)
+        this.$axios.post('oauth/authorize?p=home&type=wechat&code=' + query.code)
           .then((response) => {
             window.opener.setUserInfo(response.data.data)
           }).catch(() => {

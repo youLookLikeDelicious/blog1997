@@ -607,7 +607,7 @@ export default {
     max-width: 110rem;
     overflow-y: auto;
     text-align: left;
-    font-size: 2.1rem;
+    font-size: 1.5rem;
     line-height: 3rem;
     padding: 2rem 3rem;
     border-radius: 0.3rem;
@@ -617,6 +617,7 @@ export default {
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.02),
       0 8px 10px 1px rgba(0, 0, 0, 0.04), 0 3px 14px 2px rgba(0, 0, 0, 0.02);
     pre {
+      background-color: #f8f8f8;
       @extend %scroll-bar-base;
       &::-webkit-scrollbar {
         width: 100%;
@@ -640,6 +641,9 @@ export default {
     }
     h4 {
       font-size: 1.7rem;
+    }
+    h1, h2, h3, h4, h5, p {
+      margin: 1.2rem 0;
     }
   }
   // ------------------------------------ 文章目录样式

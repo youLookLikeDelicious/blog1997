@@ -96,14 +96,14 @@ export default {
     //   this.$store.commit('globalState/setPromptMessage', { msg: '马上就好', status: true })
     // },
     loginByWeChat () {
-      this.openNewWindow(`https://open.weixin.qq.com/connect/qrconnect?appid=${process.env.WEICHAT_APP_ID}&redirect_uri=${process.env.WEICHAT_REDIRECT}&response_type=code&scope=snsapi_login&state=state`, '使用微信登陆')
+      this.openNewWindow(`https://open.weixin.qq.com/connect/qrconnect?appid=${this.$config.weChatAppId}&redirect_uri=${this.$config.weChatRedirect}&response_type=code&scope=snsapi_login&state=state`, '使用微信登陆')
     },
     /**
      * 点击git图标的行为
      * @param e
      */
     loginByGit () {
-      this.openNewWindow(`https://github.com/login/oauth/authorize?client_id=${process.env.GIT_CLIENT_ID}&redirect_uri=${process.env.GIT_CALL_BACK}`, '使用GIT登陆')
+      this.openNewWindow(`https://github.com/login/oauth/authorize?client_id=${this.$config.gitClientId}&redirect_uri=${this.$config.gitCallBack}`, '使用GIT登陆')
     },
     /**
      * 打开新的窗口
@@ -137,5 +137,6 @@ export default {
 <style lang="scss">
 .social-account-wrapper{
     width: 23rem;
+    margin-top: 1.7rem;
 }
 </style>

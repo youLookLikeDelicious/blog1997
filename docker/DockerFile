@@ -25,5 +25,4 @@ COPY ./package-product.json /var/www/package.json
 COPY --from=build /app/static/ /var/www/static
 COPY --from=build /app/.nuxt/ /var/www/.nuxt
 RUN cd /var/www && npm i --product
-# RUN echo nginx www.blog1997.com >> /etc/hosts 总感觉这样配置不好
 WORKDIR /var/www
