@@ -4,7 +4,7 @@
       v-for="(article, index) in articles"
       :key="index"
       :data-index="index"
-      :class="['post-' + article.gallery_id, 'article-summary']"
+      :class="['post-' + article.gallery_id, 'article-summary-wrapper']"
     >
       <backDrop v-if="visibleBackDrop.includes(index)" :gallery="article.gallery" width="90%" right="-5rem" />
       <header class="article_header">
@@ -87,7 +87,7 @@
         </div>
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="article_summary" v-html="$initHTML(article)" />
+      <div class="article-summary" v-html="$initHTML(article)" />
       <tags :id="article.identity" :tags="article.tags" />
     </article>
     <div v-if="p < pages && !inProgress" class="read-more-article">
@@ -232,11 +232,12 @@ export default {
   position: absolute;
 }
 
-.article_summary {
+.article-summary {
   display: block;
   font-size: 1.9rem;
   margin-top: 5rem;
   line-height: 2.7rem;
+  font-size: 1.5rem;
   pre {
     white-space: pre-wrap;
   }

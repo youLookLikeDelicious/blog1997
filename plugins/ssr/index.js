@@ -8,7 +8,8 @@ export default function ({ $config, $axios }) {
     install (vue) {
       vue.prototype.$marked = marked
       vue.prototype.$initHTML = function (target) {
-        return target.is_markdown === 'yes' ? marked(target.content || target.summary) : target.content
+        const content = target.content || target.summary
+        return target.is_markdown === 'yes' ? marked(content) : content
       }
     }
   })

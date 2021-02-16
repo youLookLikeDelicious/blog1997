@@ -34,7 +34,7 @@ const observer = new IntersectionObserver(handler, {
 export default {
   install (Vue) {
     Vue.prototype.$articleInitAnimate = function (container) {
-      const targets = container instanceof HTMLElement ? container.querySelectorAll('article.article-summary') : document.querySelectorAll('article.article-summary')
+      const targets = container instanceof HTMLElement ? container.querySelectorAll('article.article-summary-wrapper') : document.querySelectorAll('article.article-summary-wrapper')
       for (let i = 0, len = targets.length; i < len; i++) {
         if (targets[i].getAttribute('show')) {
           continue
