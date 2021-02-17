@@ -506,6 +506,9 @@ export default {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+  .article-header-wrapper{
+    padding: 2rem 1rem 1rem 10rem;
+  }
 }
 @media screen and (min-width: $media-min-width) {
   .article-sidebar{
@@ -519,11 +522,12 @@ export default {
     padding-left: 0;
     padding-right: 0;
   }
+  .article-header-wrapper{
+    padding: 2rem 10rem 10rem 10rem;
+  }
 }
 
 .article-header-wrapper {
-  height: 50rem;
-  padding: 2rem 10rem 10rem 10rem;
   margin-bottom: 3rem;
   box-sizing: border-box;
   //--------------------------------------------- 文章作者信息样式
@@ -533,10 +537,11 @@ export default {
     // 作者 创建时间 阅读数量等数据的样式
     .detail {
       display: inline-block;
-      height: 4.5rem;
+      height: 6rem;
       text-align: left;
       vertical-align: middle;
       margin-right: 1.2rem;
+      margin-top: 1rem;
       p {
         display: inline-block;
       }
