@@ -17,6 +17,18 @@ const features = [
   // 'es2016'
 ].join('%2C')
 
+const googleSiteTag = []
+
+if (process.env.ANALYTICS) {
+  googleSiteTag.push(...[
+    { src: `https://www.googletagmanager.com/gtag/js?id=${process.env.ANALYTICS}`, async: true },
+    { content: `window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', '${process.env.ANALYTICS}');` }
+  ])
+}
 export default {
   ssr: true,
   env: env.parsed,
@@ -41,10 +53,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
     // script: [
     //   { src: `https://polyfill.io/v3/polyfill.min.js?features=${features}`, body: true }
-    // ]
+    // ],
+    script: googleSiteTag
   },
   /*
   ** Customize the progress-bar color
