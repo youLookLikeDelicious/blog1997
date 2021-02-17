@@ -64,7 +64,7 @@ export default {
   name: 'AboutMe',
   head () {
     return {
-      title: process.env.title + ' | About me'
+      title: this.$config.title + ' | About me'
     }
   }
 }

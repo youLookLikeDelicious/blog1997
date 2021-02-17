@@ -46,7 +46,7 @@ export default {
   },
   head () {
     return {
-      title: process.env.title + ' | leave-message'
+      title: this.$config.title + ' | Leave-Message'
     }
   },
   async asyncData ({ app, $responseHandler, req, res }) {

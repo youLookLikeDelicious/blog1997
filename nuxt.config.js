@@ -96,7 +96,8 @@ export default {
     weChatAppId: process.env.WEICHAT_APP_ID,
     weChatRedirect: process.env.WEICHAT_REDIRECT,
     gitClientId: process.env.GIT_CLIENT_ID,
-    gitCallBack: process.env.GIT_CALL_BACK
+    gitCallBack: process.env.GIT_CALL_BACK,
+    title: process.env.title
   },
   /*
   ** Build configuration

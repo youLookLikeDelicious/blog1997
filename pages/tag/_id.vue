@@ -64,7 +64,7 @@ export default {
   },
   head () {
     return {
-      title: process.env.title + ' | Tag'
+      title: this.$config.title + ' | Tag'
     }
   },
   async asyncData ({ app, $responseHandler, params, req, res }) {

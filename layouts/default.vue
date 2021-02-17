@@ -33,7 +33,7 @@ export default {
       reload: this.reload
     }
   },
-  middleware: ['clear-state'],
+  middleware: ['base'],
   data () {
     return {
       showScrollToTop: false,
@@ -49,6 +49,7 @@ export default {
   mounted () {
     window.$nuxt.context.app.$canUseWebp()
     document.addEventListener('scroll', this.scrollDocumentElement)
+    this.$store.dispatch('user/getCurrentUser')
     this.$nextTick(this.$initializeHTML)
   },
   beforeDestroy () {
