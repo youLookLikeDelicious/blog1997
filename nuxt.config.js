@@ -22,13 +22,14 @@ const googleSiteTag = []
 if (process.env.ANALYTICS) {
   googleSiteTag.push(...[
     { src: `https://www.googletagmanager.com/gtag/js?id=${process.env.ANALYTICS}`, async: true },
-    { content: `window.dataLayer = window.dataLayer || [];
+    { innerHTML: `window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
   
     gtag('config', '${process.env.ANALYTICS}');` }
   ])
 }
+
 export default {
   ssr: true,
   env: env.parsed,
