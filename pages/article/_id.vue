@@ -501,13 +501,14 @@ export default {
   }
   .article-content-wrap{
     padding-right: 0;
+    overflow-x: hidden;
   }
   .article-comment-box, .comment_num{
     padding-left: 2rem;
     padding-right: 2rem;
   }
   .article-header-wrapper{
-    padding: 2rem 1rem 1rem 10rem;
+    padding: 2rem 0rem 5rem 0;
   }
 }
 @media screen and (min-width: $media-min-width) {

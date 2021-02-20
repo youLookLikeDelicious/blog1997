@@ -22,14 +22,9 @@ const googleSiteTag = []
 if (process.env.ANALYTICS) {
   googleSiteTag.push(...[
     { src: `https://www.googletagmanager.com/gtag/js?id=${process.env.ANALYTICS}`, async: true },
-    { innerHTML: `window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', '${process.env.ANALYTICS}');` }
+    { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', '${process.env.ANALYTICS}');` }
   ])
 }
-
 export default {
   ssr: true,
   env: env.parsed,
@@ -58,7 +53,8 @@ export default {
     // script: [
     //   { src: `https://polyfill.io/v3/polyfill.min.js?features=${features}`, body: true }
     // ],
-    script: googleSiteTag
+    script: googleSiteTag,
+    __dangerouslyDisableSanitizers: ['script']
   },
   /*
   ** Customize the progress-bar color
