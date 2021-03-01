@@ -235,29 +235,42 @@ export default {
     }
   },
   head () {
+    const article = this.article
+    const description = article.content.slice(0, 300).replace(/<[^>]*>/g, '')
+    const keywords = article.tags.map(item => item.name).join(',')
     return {
-      title: this.article.title + ' | blog1997',
+      title: article.title + ' | blog1997',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.article.description
+          content: description
+        },
+        {
+          hid: 'keywords',
+          property: 'keywords',
+          content: keywords
         },
         { hid: 'og:type', property: 'og:type', content: 'article' },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: this.article.title + ' | blog1997'
+          content: article.title + ' | blog1997'
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.article.description
+          content: description
+        },
+        {
+          hid: 'og:keywords',
+          property: 'og:keywords',
+          content: keywords
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: process.env.DOMAIN + this.$route.path
+          content: this.$config.domain + this.$route.path
         }
       ]
     }

@@ -25,6 +25,7 @@ if (process.env.ANALYTICS) {
     { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', '${process.env.ANALYTICS}');` }
   ])
 }
+
 export default {
   ssr: true,
   env: env.parsed,
@@ -33,6 +34,9 @@ export default {
   */
   head: {
     title: process.env.title,
+    htmlAttrs: {
+      lang: process.env.lang
+    },
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=Edge,chrome=1' },
@@ -41,7 +45,7 @@ export default {
       { name: 'viewport', content: 'width=device-width,initial-scale=1.0', 'maximum-scale': '1.0', 'user-scalable': 'no' },
       { hid: 'description', name: 'description', content: process.env.description },
       { hid: 'og:description', name: 'og:description', content: process.env.description },
-      { hid: 'keywords', name: 'keywords', content: process.env.keywords },
+      { hid: 'keywords', name: 'keywords', content: process.env.keywords || process.env.title },
       { hid: 'applicable-device', name: 'applicable-device', content: 'pc,mobile' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'blog1997' },
       { hid: 'og:local', property: 'og:local', content: 'zh_cn' },
@@ -107,7 +111,8 @@ export default {
     weChatRedirect: process.env.WEICHAT_REDIRECT,
     gitClientId: process.env.GIT_CLIENT_ID,
     gitCallBack: process.env.GIT_CALL_BACK,
-    title: process.env.title
+    title: process.env.title,
+    domain: process.env.DOMAIN
   },
   /*
   ** Build configuration

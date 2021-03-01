@@ -53,11 +53,7 @@ export default {
   },
   head () {
     return {
-      title: this.$config.title,
-      meta: [
-        { hid: 'keywords', name: 'keywords', content: 'blog1997,个人博客' },
-        { hid: 'description', name: 'description', content: 'PHP,JavaScript,Docker,Linux' }
-      ]
+      title: this.$config.title
     }
   }
 }

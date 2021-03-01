@@ -1,7 +1,7 @@
 #
 # Install vendor package
 #
-FROM node:10.23-alpine3.9 as build
+FROM node:14.15.5-alpine3.11 as build
 
 # Install git
 RUN apk add --no-cache git \
@@ -10,19 +10,20 @@ RUN apk add --no-cache git \
 # Set bit registry
 RUN npm config set @bit:registry https://node.bit.dev
 
-COPY . /app
-COPY ./package-product.json /app/package.json
-RUN cd /app && npm install  && npm run build
+COPY . /var/www
+COPY ./package-product.json /var/www/package.json
+RUN cd /var/www && npm install
+RUN cd /var/www && npm run build
 
 #
 # Build application
 #
-FROM node:10.23-alpine3.9
+# FROM node:14.15.5-alpine3.11
 
-ENV NODE_ENV=production NODE_PATH=/usr/local/lib/node_modules
-COPY . /var/www
-COPY ./package-product.json /var/www/package.json
-COPY --from=build /app/static/ /var/www/static
-COPY --from=build /app/.nuxt/ /var/www/.nuxt
-RUN cd /var/www && npm i --product
-WORKDIR /var/www
+# ENV NODE_PATH=/usr/local/lib/node_modules
+# COPY . /var/www
+# COPY ./package-product.json /var/www/package.json
+# COPY --from=build /app/static/ /var/www/static
+# COPY --from=build /app/.nuxt/ /var/www/.nuxt
+# RUN cd /var/www && npm i --product
+# WORKDIR /var/www
