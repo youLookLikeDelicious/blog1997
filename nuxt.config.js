@@ -112,7 +112,8 @@ export default {
     gitClientId: process.env.GIT_CLIENT_ID,
     gitCallBack: process.env.GIT_CALL_BACK,
     title: process.env.title,
-    domain: process.env.DOMAIN
+    domain: process.env.DOMAIN,
+    masterEmail: process.env.MASTER_EMAIL
   },
   /*
   ** Build configuration

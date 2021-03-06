@@ -238,6 +238,9 @@ export default {
   margin-top: 5rem;
   line-height: 2.7rem;
   font-size: 1.5rem;
+  max-height: 35rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
   pre {
     white-space: pre-wrap;
   }

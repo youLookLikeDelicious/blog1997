@@ -8,7 +8,7 @@
         友情连接：<span v-for="(friendLink, index) in friendLinkList" :key="index"><a :href="friendLink.url" target="_blank">{{ friendLink.name }}</a></span>
       </p>
       <p>所有文章、个人博客模板未经授权禁止转载、摘编、复制或建立镜像.</p>
-      <p><span>&copy; 2019</span><span><a href="/" @click.prevent>联系方式</a></span><span><a href="http://beian.miit.gov.cn/" target="_blank">{{ beian }}</a></span>All right reserved</p>
+      <p><span>&copy; 2019-{{ (new Date()).getFullYear() }}</span><span><a :href="'mailto:' + $config.masterEmail" target="_blank">联系方式</a></span><span><a href="http://beian.miit.gov.cn/" target="_blank">{{ beian }}</a></span>All right reserved</p>
     </div>
   </footer>
 </template>

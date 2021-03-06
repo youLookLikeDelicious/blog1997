@@ -13,8 +13,7 @@ RUN npm config set @bit:registry https://node.bit.dev
 COPY . /var/www
 COPY ./package-product.json /var/www/package.json
 RUN cd /var/www && npm install
-RUN cd /var/www && npm run build
-
+WORKDIR /var/www
 #
 # Build application
 #
