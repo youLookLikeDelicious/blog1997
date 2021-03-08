@@ -123,7 +123,7 @@
                 :key="index"
                 :class="'list-d-' + (item.dimension - maxDimension + 2)"
               >
-                <a :href="'#heading-' + index">{{ item.header }}</a>
+                <a :href="'#heading-' + index" @click.prevent="scrollToSubTitle">{{ item.header }}</a>
               </li>
             </ul>
           </nav>
@@ -501,6 +501,16 @@ export default {
       if (this.maxDimension !== dimension) {
         this.maxDimension = dimension
       }
+    },
+    /**
+     * 滚动到h标签
+     *
+     * @param {Event} e
+     */
+    scrollToSubTitle (e) {
+      const href = e.target.href.replace(/.*#/i, '')
+      const el = document.getElementById(href)
+      el.scrollIntoView({ block: 'center' })
     }
   }
 }
@@ -626,7 +636,7 @@ export default {
     max-width: 110rem;
     overflow-y: auto;
     text-align: left;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     line-height: 3rem;
     padding: 2rem 3rem;
     border-radius: 0.3rem;
@@ -661,8 +671,12 @@ export default {
     h4 {
       font-size: 1.7rem;
     }
-    h1, h2, h3, h4, h5, p {
-      margin: 1.2rem 0;
+    h1, h2, h3, h4, h5 {
+      padding: 3rem 0;
+      box-sizing: border-box;
+    }
+    p{
+      margin: 2rem 0;
     }
   }
   // ------------------------------------ 文章目录样式

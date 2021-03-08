@@ -97,7 +97,7 @@ export default {
         return
       }
       this.$axios({
-        url: this.gallery.url,
+        url: this.gallery.url + '?t=origin',
         baseURL: '/',
         responseType: 'blob'
       })

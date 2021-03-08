@@ -13,7 +13,9 @@ const renderer = {
 
     width = width ? 'width=' + width[1] : ''
 
-    return `<img src="${href}" alt="${text}" ${width} />`
+    const pureSrc = href.replace(/\?.*/, '')
+
+    return `<img src="${href}" class="lazy" data-src="${pureSrc}" alt="${text}" ${width} />`
   }
 }
 
