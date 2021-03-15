@@ -8,7 +8,7 @@
     z-index: -2;
     right: {{ right }};
     top: {{ top }};
-    background-image: radial-gradient(ellipse closest-side, rgba(50, 0, 0, 0.3), #100e17), url({{ gallery.thumbnail }});
+    background-image: radial-gradient(ellipse closest-side, rgba(50, 0, 0, 0.3), #262626), url({{ gallery.thumbnail }});
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -81,7 +81,7 @@ export default {
     z-index: -2;
     right: 0px;
     top: ${this.top};
-    background-image: radial-gradient(ellipse closest-side, rgba(50, 0, 0, 0.3), #100e17), url(${this.realdGallery});
+    background-image: radial-gradient(ellipse closest-side, rgba(50, 0, 0, 0.3), #262626), url(${this.realdGallery});
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

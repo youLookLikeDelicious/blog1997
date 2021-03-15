@@ -696,7 +696,7 @@ export default {
       border-left: 0.1rem solid #ebedef;
     }
     li {
-      padding: 0.7rem;
+      padding: 0.7rem 2rem;
       &:hover {
         background-color: #ebedef;
       }
@@ -722,16 +722,16 @@ export default {
     font-weight: 1.6rem;
   }
   .list-d-2{
-    padding-left: 2em !important;
-  }
-  .list-d-3{
     padding-left: 3em !important;
   }
-  .list-d-4{
+  .list-d-3{
     padding-left: 4em !important;
   }
-  .list-d-5{
+  .list-d-4{
     padding-left: 5em !important;
+  }
+  .list-d-5{
+    padding-left: 6em !important;
   }
 }
 .article-sidebar{

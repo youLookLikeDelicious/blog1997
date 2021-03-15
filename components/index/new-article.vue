@@ -148,9 +148,7 @@ export default {
             display: table;
             margin-bottom: 1.2rem;
             a{
-                &:hover {
-                    @extend %text-gradient-blue;
-                }
+              @extend %text-gradient-blue;
             }
         }
     }

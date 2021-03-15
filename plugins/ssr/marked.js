@@ -9,13 +9,9 @@ import marked from 'marked'
 
 const renderer = {
   image (href, title, text) {
-    let width = href.match(/width=(\d+)/)
-
-    width = width ? 'width=' + width[1] : ''
-
     const pureSrc = href.replace(/\?.*/, '')
 
-    return `<img src="${href}" class="lazy" data-src="${pureSrc}" alt="${text}" ${width} />`
+    return `<img class="lazy" data-src="${pureSrc}" alt="${text}" style="max-width: 97%; display: inline-block; margin: 0 auto;" />`
   }
 }
 

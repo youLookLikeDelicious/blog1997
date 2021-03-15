@@ -34,12 +34,12 @@ export default {
     width: 100%;
     color: #fff;
     display: flex;
-    padding: 1rem 0;
+    padding: 3rem 0;
     // margin-top: 23rem;
     font-size: 1.3rem;
     height: fit-content;
     // background-image: linear-gradient(to right bottom, #29bdd9, #276ace);
-    @include compatible-style('', ('background-image': linear-gradient(to bottom,  $banner-color-2, $banner-color-1 )) );
+    background-color: $background-color-level-2;
     z-index: 999;
     span{
       padding: .3rem 1rem;

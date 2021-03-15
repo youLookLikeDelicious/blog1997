@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+  <head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+    <!--[if IE 9]>
+      <link rel="stylesheet" href="/style/ie9.css">
+    <![endif]-->
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
+  <!--[if lte IE 9]>
+    <script>
+      // 创建元素
+      var div = document.createElement('div')
+      div.innerHTML = '为了更加舒适的用户体验，请将您的IE浏览器升级到最新版本，或使用其他浏览器'
+      div.style.color = 'orange'
+      div.style.width = '100%'
+      div.style.height = '5rem'
+      div.style.textAlign = 'center'
+      div.style.fontSize = '1.6rem'
+      div.style.zIndex = '9999'
+      div.style.marginBottom = '2rem'
+      div.style.position = 'relative'
+
+      document.body.insertBefore(div, document.body.getElementsByTagName('div')[0])
+    </script>
+  <![endif]-->
+  <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https'){
+       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <script>
+      (function(){
+      var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+      document.write('<script src="' + src + '" id="sozz"><\/script>');
+      })();
+    </script>
+</html>

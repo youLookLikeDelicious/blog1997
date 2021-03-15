@@ -169,7 +169,7 @@ export default {
     // @include compatible-style('', ('background-image': linear-gradient(to right bottom,  #276ace, #29bdd9 )) );
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#17141d, endColorstr=#303036);
     @include compatible-style('', ('background-image': linear-gradient(to right bottom,  $banner-color-1, $banner-color-2 )) );
-    box-shadow: 0 0.4rem 2.1rem rgba(102,102,102,0.1), 0 0.9rem 1.4rem rgba(102,102,102,0.1), 0 0.25rem 0.53rem rgba(102,102,102,0.5), 0 0.12rem 0.18rem rgba(102,102,102,0.1);
+    box-shadow: 0 0.4rem 2.1rem rgba(32,32,32,0.1), 0 0.9rem 1.4rem rgba(32,32,32,0.1), 0 0.25rem 0.53rem rgba(32,32,32,0.5), 0 0.12rem 0.18rem rgba(32,32,32,0.1);
     div{
       display: flex;
       align-items: center;

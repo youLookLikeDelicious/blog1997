@@ -168,18 +168,19 @@ export default {
 <style lang="scss">
 @media screen and (min-width: 0) {
   .article_list {
+    width: 97%;
     margin-left: auto;
-    margin-right: auto !important;
+    margin-right: auto;
   }
 }
 @media screen and (min-width: $media-min-width) {
   .article_list {
     float: left;
+    width: 75%;
+    margin-right: 1rem;
   }
 }
 .article_list {
-  width: 75%;
-  margin-right: 1rem;
   article {
     opacity: 0;
     padding: 16rem 2rem 2rem 2rem;
@@ -187,15 +188,6 @@ export default {
     margin-bottom: 9rem;
     max-height: 55rem;
     text-overflow: ellipsis;
-  }
-  .title {
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    display: table;
-    &:hover {
-      @extend %text-gradient-blue;
-    }
   }
   @extend %user_info_wrap;
   .read-more-article {
@@ -208,6 +200,28 @@ export default {
   span {
     &:first-child {
       margin-right: 0.9rem;
+    }
+  }
+}
+.article_list, .hero-article{
+  .title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    display: table;
+    @extend %text-gradient-blue;
+    &::after{
+      content: '';
+      height: .2rem;
+      width: 0;
+      transition: width .3s;
+      display: block;
+    }
+    &:hover {
+      &::after {
+        @include compatible-style('', ('background-image': linear-gradient(to bottom right, #276ace, #29bdd9)) );
+        width: 100%;
+      }
     }
   }
 }
@@ -234,12 +248,12 @@ export default {
 
 .article-summary {
   display: block;
-  font-size: 1.9rem;
   margin-top: 5rem;
   line-height: 2.7rem;
   font-size: 1.5rem;
-  max-height: 35rem;
+  max-height: 27rem;
   overflow: hidden;
+  box-sizing: border-box;
   text-overflow: ellipsis;
   pre {
     white-space: pre-wrap;

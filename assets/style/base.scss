@@ -178,3 +178,6 @@ html{
   opacity: .6;
   cursor: not-allowed;
 }
+.lazy{
+  filter: blur(20px);
+}
