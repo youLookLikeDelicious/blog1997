@@ -13,5 +13,6 @@ export default function ({ $config, $axios }) {
       }
     }
   })
+  $config.header = []
   $axios.defaults.baseURL = $config.baseURL
 }

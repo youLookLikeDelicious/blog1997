@@ -119,7 +119,7 @@ server {
 
 ### 项目管理员界面演示
 这是由cypress测试工具，录制的E2E测试过程。作为演示素材
-[![Watch the video](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](http://go.plvideo.cn/front/video/preview?vid=43876a053ad92f5e3bcf91ab170ace07_4)
+[![Watch the video](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](http://go.plvideo.cn/front/video/preview?vid=43876a053a5729ff357674c4390011c9_4)
 
 ### 打包镜像 
 

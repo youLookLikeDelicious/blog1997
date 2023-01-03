@@ -18,15 +18,16 @@ const env = require('dotenv').config()
 //   // 'es2016'
 // ].join('%2C')
 
-const googleSiteTag = []
-
-if (env.parsed.ANALYTICS) {
-  googleSiteTag.push(...[
-    { src: `https://www.googletagmanager.com/gtag/js?id=${env.parsed.ANALYTICS}`, async: true },
-    { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', '${process.env.ANALYTICS}');` }
-  ])
-}
 const RSA_PUB_KEY = env.parsed.RSA_PUBLIC_KEY
+const GOOGLE_ANALYTICS = env.parsed.ANALYTICS
+
+// const analyticsKey = require('dotenv').config().parsed.ANALYTICS
+// if (analyticsKey) {
+//   googleSiteTag.push(...[
+//     { src: `https://www.googletagmanager.com/gtag/js?id=${analyticsKey}`, async: true },
+//     { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', '${analyticsKey}');` }
+//   ])
+// }
 export default {
   ssr: true,
   /*
@@ -57,7 +58,7 @@ export default {
     // script: [
     //   { src: `https://polyfill.io/v3/polyfill.min.js?features=${features}`, body: true }
     // ],
-    script: googleSiteTag,
+    // eslint-disable-next-line no-undef
     __dangerouslyDisableSanitizers: ['script']
   },
   /*
@@ -113,7 +114,8 @@ export default {
     title: process.env.title,
     domain: process.env.DOMAIN,
     masterEmail: process.env.MASTER_EMAIL,
-    RSA_PUB_KEY
+    RSA_PUB_KEY,
+    GOOGLE_ANALYTICS
   },
   /*
   ** Build configuration

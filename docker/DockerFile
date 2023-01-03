@@ -5,11 +5,15 @@ FROM node:16-alpine3.16 as node
 
 # Install git
 RUN apk add --no-cache git \
-    py3-pip make g++
+    py3-pip make g++ && npm install -g cnpm --registry=http://registry.npm.taobao.org
 
 # Set bit registry
 FROM chaosxy/node:16-alpine3.16-pyton3 as build
-RUN npm config set @bit:registry https://node.bit.dev
+RUN npm config set @bit:registry https://node.bit.dev && \
+    cnpm config set @bit:registry https://node.bit.dev && \
+    npm config set strict-ssl false && \
+    export NODE_TLS_REJECT_UNAUTHORIZED=0
+
 WORKDIR /var/www
 
 COPY . /var/www
@@ -17,15 +21,17 @@ COPY ./app.prod.html /var/www/app.html
 COPY .env.example /var/www/.env
 
 RUN cp /usr/bin/python3 /usr/bin/python && \
+    # cnpm install consola @nuxt/builder --save-dev && \
     npm install --omit=optional --legacy-peer-deps && npm run build
 
 
 FROM chaosxy/node:16-alpine3.16-pyton3 as app
-RUN npm config set @bit:registry https://node.bit.dev
+# RUN npm config set @bit:registry https://node.bit.dev && \
+# cnpm config set @bit:registry https://node.bit.dev
 WORKDIR /var/www
 COPY --from=build /var/www/ /var/www/
 COPY ./docker/start.sh /usr/bin/start.sh
-RUN rm -rf node_modules && npm install --only=product --legacy-peer-deps
+# RUN rm -rf node_modules && npm install --only=product --legacy-peer-deps
 RUN chmod +x /usr/bin/start.sh
 
 ENTRYPOINT ["start.sh"]
