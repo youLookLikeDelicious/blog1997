@@ -50,7 +50,11 @@ axios.interceptors.response.use(function (response) {
         }
       }
     } else {
-      errorMessage = response.data.message
+      try {
+        errorMessage = Object.values(response.data.message).map(item => item.join('\n')).join('\n')
+      } catch {
+        errorMessage = response.data.message || '未知错误'
+      }
     }
     // 设置提示消息
     window.$nuxt.$store.commit('globalState/setPromptMessage', { msg: errorMessage, status: false })

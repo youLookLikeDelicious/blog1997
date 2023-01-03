@@ -131,8 +131,6 @@
         <!--------------------------------------------点赞、举报按钮-------------------------------------------->
         <div
           class="article-sub-btn clear-float"
-          @mouseenter="showReportBtn"
-          @mouseleave="hidReportBtn"
         >
           <thumbUp
             :id="article.identity"
@@ -144,7 +142,7 @@
           <a
             v-if="$store.state.user.id"
             href="/"
-            class="icofont-warning float-right report-article-btn display-none"
+            class="icofont-warning float-right report-article-btn"
             @click.prevent
             @click="reportIllegalArticle"
           >举报</a>
@@ -203,17 +201,16 @@
 import commentList from '~/components/comment-list/comment-list'
 import thumbUp from '~/components/common/thumb-up'
 import tags from '~/components/index/article-tags'
-import commnetMixin from '~/mixins/comment/comment-mixin'
-import reportIllegalInfoHandler from '~/mixins/report-illegal-info/report-illegal-info-handler'
+import commentMixin from '~/mixins/comment/comment-mixin'
 import editorMixin from '~/mixins/umeditor'
-
+import { getArticleInfo, getComments } from '~/api/article'
 export default {
   components: {
     commentList,
     thumbUp,
     tags
   },
-  mixins: [commnetMixin, reportIllegalInfoHandler, editorMixin],
+  mixins: [commentMixin, editorMixin],
   data () {
     return {
       article: {
@@ -270,7 +267,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: this.$config.domain + this.$route.path
+          content: this.$route.path
         }
       ]
     }
@@ -298,8 +295,7 @@ export default {
       return redirect('/404')
     }
 
-    const data = await app.$axios
-      .get(`article/${params.id}`, req)
+    const data = await getArticleInfo(params.id, req)
       .then(response => $responseHandler(response, res))
       .catch((e) => {
         if (e.response.status === 404) {
@@ -392,10 +388,8 @@ export default {
      * 获取更多的评论
      * @param  {string} type
      */
-    getComments (type = 'article') {
-      // 开始请求
-      this.$axios
-        .post(`/article/comments/${this.article.identity}?p=${this.p + 1}`)
+    getComments () {
+      getComments(this.article.identity, { p: this.p + 1 })
         .then(response => response.data.data)
         .then((comments) => {
           this.appendComments(comments)
@@ -822,6 +816,13 @@ export default {
   box-sizing: content-box;
   .icofont-warning {
     margin-top: 2rem;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  &:hover {
+    .icofont-warning {
+      opacity: 1;
+    }
   }
 }
 .report-article-btn {

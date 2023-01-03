@@ -2,10 +2,10 @@ export default {
   methods: {
     /**
      * 加如评论按钮行为
-     * @param e
+     * @param {int} articleId
      */
-    joinComment (e) {
-      this.$router.push(`/article/${e.target.dataset.id}/#comments`)
+    joinComment (articleId) {
+      this.$router.push(`/article/${articleId}/#comments`)
     }
   }
 }

@@ -11,8 +11,8 @@ export default {
     Vue.prototype.$initializeHTML = function () {
       this.$articleInitAnimate()
       this.$lazy()
-      this.$initFormula()
       this.$highLightJs()
+      this.$initFormula()
     }
   }
 }

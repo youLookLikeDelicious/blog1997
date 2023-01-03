@@ -2,33 +2,33 @@
 // import fs from 'fs'
 
 const env = require('dotenv').config()
-const features = [
-  'fetch',
-  // 'Object.entries',
-  // 'Object.assign',
-  // 'Promise',
-  // 'Promise.prototype.finally',
-  // 'NodeList.prototype.%40%40iterator',
-  'NodeList.prototype.forEach'
-  // 'String.prototype.endsWith',
-  // 'String.prototype.startsWith'
-  // 'IntersectionObserver'
-  // 'es2015',
-  // 'es2016'
-].join('%2C')
+
+// const features = [
+//   'fetch',
+//   // 'Object.entries',
+//   // 'Object.assign',
+//   // 'Promise',
+//   // 'Promise.prototype.finally',
+//   // 'NodeList.prototype.%40%40iterator',
+//   'NodeList.prototype.forEach'
+//   // 'String.prototype.endsWith',
+//   // 'String.prototype.startsWith'
+//   // 'IntersectionObserver'
+//   // 'es2015',
+//   // 'es2016'
+// ].join('%2C')
 
 const googleSiteTag = []
 
-if (process.env.ANALYTICS) {
+if (env.parsed.ANALYTICS) {
   googleSiteTag.push(...[
-    { src: `https://www.googletagmanager.com/gtag/js?id=${process.env.ANALYTICS}`, async: true },
+    { src: `https://www.googletagmanager.com/gtag/js?id=${env.parsed.ANALYTICS}`, async: true },
     { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', '${process.env.ANALYTICS}');` }
   ])
 }
-
+const RSA_PUB_KEY = env.parsed.RSA_PUBLIC_KEY
 export default {
   ssr: true,
-  env: env.parsed,
   /*
   ** Headers of the page
   */
@@ -108,12 +108,12 @@ export default {
     baseURL: process.env.BASE_URL,
     clientBaseURL: process.env.CLIENT_BASE_URL,
     weChatAppId: process.env.WEICHAT_APP_ID,
-    weChatRedirect: process.env.WEICHAT_REDIRECT,
     gitClientId: process.env.GIT_CLIENT_ID,
     gitCallBack: process.env.GIT_CALL_BACK,
     title: process.env.title,
     domain: process.env.DOMAIN,
-    masterEmail: process.env.MASTER_EMAIL
+    masterEmail: process.env.MASTER_EMAIL,
+    RSA_PUB_KEY
   },
   /*
   ** Build configuration

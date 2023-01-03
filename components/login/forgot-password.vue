@@ -13,6 +13,7 @@ export default {
   name: 'ForgotPassword',
   data () {
     return {
+      isRequesting: false,
       model: {
         email: ''
       }
@@ -20,13 +21,30 @@ export default {
   },
   computed: {
     allowSubmit () {
-      return this.model.email && this.$verify('email', this.model.email)
+      return this.model.email && this.$verify('email', this.model.email) && !this.isRequesting
     }
+  },
+  mounted () {
+    addEventListener('keyup', this.handleKeyUp)
+  },
+  beforeDestroy () {
+    removeEventListener('keyup', this.handleKeyUp)
   },
   methods: {
     sendRestPasswordLink () {
+      if (!this.allowSubmit) {
+        return
+      }
+      this.isRequesting = true
       this.$axios.post('/user/password/reset', this.model)
         .then(() => this.$emit('close'))
+        .finally(() => {
+          this.isRequesting = false
+        })
+    },
+    handleKeyUp (e) {
+      if (e.keyCode !== 13) { return }
+      this.sendRestPasswordLink()
     }
   }
 }

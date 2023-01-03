@@ -45,7 +45,7 @@
         <div class="user_info">
           <p>评论 {{ article.commented }}</p>
           <p class="relative-position">
-            <a href="/" class="join-comment" :data-id="article.identity" @click.stop.prevent @click="joinComment($event)">
+            <a href="/" class="join-comment" :data-id="article.identity" @click.stop.prevent @click="joinComment(article.identity)">
               加入评论
               <svg
                 class="right-arrow-svg"

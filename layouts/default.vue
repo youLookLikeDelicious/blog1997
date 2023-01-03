@@ -122,10 +122,11 @@ main{
   box-sizing: border-box;
   overflow-y: hidden;
   display: block;
+  margin-top: 4.5rem;
 }
 .scroll-to-top{
   right: 2%;
-  bottom: 10rem;
+  bottom: 12rem;
   position: fixed;
   text-align: center;
   z-index: 9999;

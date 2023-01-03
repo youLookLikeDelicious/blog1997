@@ -11,7 +11,7 @@
       <div class="login">
         <header>
           <img
-            src="/images/logo.png"
+            src="/admin/image/logo.png"
             alt=""
           >
           <span>Blog1997</span>
@@ -21,7 +21,6 @@
             @click.prevent="close"
           >✘</a>
         </header>
-        <hr>
         <div class="login-box">
           <component
             :is="childComponent"
@@ -134,19 +133,13 @@ export default {
     border-radius: 0.3rem;
     height: 3.5rem;
     line-height: 3.5rem;
-    @include compatible-style(
-      '',
-      (
-        'background-image': linear-gradient(to bottom right, #29bdd9, #276ace),
-      )
-    );
+    background-color: #3572ce;
+    transition: background-color .3s;
     &:hover {
-      @include compatible-style(
-        '',
-        (
-          'background-image': linear-gradient(to bottom right, #276ace, #29bdd9),
-        )
-      );
+      background-color: #276ace;
+    }
+    &:active {
+      background-color: #326ec8;
     }
   }
   .captcha {
@@ -183,17 +176,21 @@ export default {
     font-size: 1.3rem;
     height: 3.5rem;
     position: relative;
-    padding: 0.2rem;
+    padding: 0.2rem .2rem 1.2rem .2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: .1rem solid rgba(#707174, .7);
     img {
       width: 3.5rem;
       height: 3.5rem;
+      vertical-align: middle;
       display: inline-block;
     }
 
     span {
+      font-size: 1.6rem;
       display: inline-block;
-      height: 100%;
-      vertical-align: middle;
     }
 
     .close {

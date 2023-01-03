@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import loginCallback from '~/pages/login/callback/_type'
+import loginCallback from '~/pages/sso/_type'
 
 describe('test login callback page', () => {
   it('test use git login', () => {

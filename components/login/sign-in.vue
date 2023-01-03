@@ -12,12 +12,12 @@
       <v-input v-model="model.captcha" type="captcha" autocomplete="off" placeholder="验证码" name="captcha" />
       <span class="icofont-qr-code absolute-position" />
     </div>
-    <img class="captcha" :src="'/admin/captcha?' + captchaSuffix" alt="captcha" @click="$emit('refreshCaptcha')">
+    <img class="captcha" :src="'/api/captcha?' + captchaSuffix" alt="captcha" @click="$emit('refreshCaptcha')">
     <div class="login-btns flex">
       <a href="/" @click.prevent="forgotPassword">忘记密码?</a>
       <a href="/" @click.prevent="register">注册</a>
     </div>
-    <a href="/" class="login-btn" @click.prevent="loginByEmail">登 陆</a>
+    <a href="/" :class="['login-btn', { 'btn-disable': !allowLoginByEmail }]" @click.prevent="loginByEmail">登 陆</a>
     <div class="social-account-wrapper">
       <a
         href="/"
@@ -44,7 +44,7 @@
       /> -->
       <a
         href="/"
-        class="weichat social-account"
+        class="'weichat social-account"
         @click.stop.prevent="loginByWeChat"
       ><i class="icofont-wechat" /></a>
     </div>
@@ -67,14 +67,21 @@ export default {
       model: {
         email: '',
         password: '',
-        captcha: ''
+        captcha: '',
+        isRequesting: false
       }
     }
   },
   computed: {
     allowLoginByEmail () {
-      return this.model.email && this.model.password && this.model.captcha
+      return this.model.email && this.model.password && this.model.captcha && !this.isRequesting
     }
+  },
+  mounted () {
+    addEventListener('keyup', this.handleKeyUp)
+  },
+  beforeDestroy () {
+    removeEventListener('keyup', this.handleKeyUp)
   },
   methods: {
     /**
@@ -84,13 +91,17 @@ export default {
       if (!this.allowLoginByEmail) {
         return
       }
-      this.$axios.post('/auth/login', this.model)
+      let { email, password } = this.model
+      email = this.$encryptor.encrypt(email)
+      password = this.$encryptor.encrypt(password)
+      this.$axios.post('/auth/login', { ...this.model, email, password })
         .then(response => response.data.data)
         .then((user) => {
           this.$store.commit('user/setUser', user)
           this.$emit('close')
         })
         .catch(e => this.$emit('refreshCaptcha'))
+        .finally((_) => { this.isRequesting = false })
     },
     // loginByQQ () {
     //   this.$store.commit('globalState/setPromptMessage', { msg: '马上就好', status: true })
@@ -129,6 +140,10 @@ export default {
      */
     register () {
       this.$emit('switch-component', 'SignUp')
+    },
+    handleKeyUp (e) {
+      if (e.keyCode !== 13) { return }
+      this.loginByEmail()
     }
   }
 }

@@ -9,7 +9,7 @@
       <span class="icofont-lock absolute-position" />
       <passwordStrength v-if="showPasswordStrength" :strength="strength" />
       <div class="password-info absolute-position">
-        <v-helper content="<div>密码必须包含数字字母和其他字符, 长度必须超过9</div>" />
+        <v-helper tabindex="-1" content="<div>密码必须包含数字字母和其他字符, 长度必须超过9</div>" />
       </div>
     </div>
     <div class="relative-position">
@@ -17,10 +17,17 @@
       <span class="icofont-lock absolute-position" />
     </div>
     <div class="relative-position">
-      <v-input v-model="model.captcha" type="captcha" autocomplete="off" placeholder="验证码" name="captcha" />
+      <v-input
+        v-model="model.captcha"
+        tabindex="-1"
+        type="captcha"
+        autocomplete="off"
+        placeholder="验证码"
+        name="captcha"
+      />
       <span class="icofont-qr-code absolute-position" />
     </div>
-    <img class="captcha" :src="'/admin/captcha?' + captchaSuffix" alt="captcha" @click="$emit('refreshCaptcha')">
+    <img class="captcha" :src="'/api/captcha?' + captchaSuffix" alt="captcha" @click="$emit('refreshCaptcha')">
 
     <a href="/" :class="['login-btn', { 'btn-disable': !allowSubmit }]" @click.prevent="signUp">注 册</a>
   </div>
@@ -45,6 +52,7 @@ export default {
   },
   data () {
     return {
+      isRequesting: false,
       model: {
         email: '',
         captcha: '',
@@ -55,23 +63,34 @@ export default {
   },
   computed: {
     allowSubmit () {
-      return this.model.email && this.model.captcha && this.strength >= 3 && this.$verify('email', this.model.email)
+      return this.model.email && this.model.captcha && this.strength >= 3 && this.$verify('email', this.model.email) && !this.isRequesting
     },
     showPasswordStrength () {
-      return this.model.password && this.model.password.length > 9
+      return this.model.password
     }
+  },
+  mounted () {
+    addEventListener('keyup', this.handleKeyUp)
+  },
+  beforeDestroy () {
+    removeEventListener('keyup', this.handleKeyUp)
   },
   methods: {
     signUp () {
       if (!this.allowSubmit) {
         return
       }
-
+      this.isRequesting = true
       this.$axios.post('oauth/sign-up', this.model)
         .then(() => this.$emit('close'))
         .catch((e) => {
           this.$emit('refreshCaptcha')
         })
+        .finally((_) => { this.isRequesting = false })
+    },
+    handleKeyUp (e) {
+      if (e.keyCode !== 13) { return }
+      this.signUp()
     }
   }
 }
@@ -93,6 +112,38 @@ export default {
     &::before{
       right: 4rem;
     }
+  }
+}
+.password-strength {
+  margin-top: 1rem !important;
+  display: flex;
+  justify-content: flex-start;
+  span {
+    width: 30%;
+    height: 1rem;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 0.3rem;
+    border: 0.1rem solid #999;
+    transition: background-color .3s;
+    &:not(first-child) {
+      margin-right: .7rem;
+    }
+  }
+  .strength-1 {
+    border: 0;
+    background-color: #e61e1e;
+    box-shadow: 0rem 0rem 0.2rem 0.1rem rgba($color: #e91313, $alpha: 0.3);
+  }
+  .strength-2 {
+    border: 0;
+    background-color: #f08c1a;
+    box-shadow: 0rem 0rem 0.2rem 0.1rem rgba($color: #f38c16, $alpha: 0.3);
+  }
+  .strength-3 {
+    border: 0;
+    background-color: #32e23b;
+    box-shadow: 0rem 0rem 0.2rem 0.1rem rgba($color: #34f316, $alpha: 0.3);
   }
 }
 </style>

@@ -1,3 +1,5 @@
+import { getCsrfToken } from '~/api/system'
+
 const state = function () {
   return {
     id: '',
@@ -34,12 +36,14 @@ const actions = {
       return
     }
     commit('stateHaveInitialized')
-    this.$axios.post('/oauth/currentUser')
-      .then((response) => {
-        commit('setUser', response.data.data)
-      }).catch((e) => {
-        commit('setUser', { id: '', name: '' })
-      })
+    getCsrfToken().then((_) => {
+      this.$axios.post('/oauth/currentUser')
+        .then((response) => {
+          commit('setUser', response.data.data)
+        }).catch((e) => {
+          commit('setUser', { id: '', name: '' })
+        })
+    })
   }
 }
 

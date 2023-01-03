@@ -1,15 +1,5 @@
 import ArticleMixin from '~/mixins/article/article-link-mixin'
 
-/**
- * mock event
- */
-const event = {
-  target: {
-    dataset: {
-      id: 2
-    }
-  }
-}
 describe('test article link mixin', () => {
   it('test', () => {
     const push = jest.fn()
@@ -20,7 +10,7 @@ describe('test article link mixin', () => {
     Mixin.prototype = Object.create(wrappedArticleMixin)
 
     const wrapper = new Mixin()
-    wrapper.joinComment(event)
-    expect(push).toHaveBeenCalledWith('/article/2/#comments')
+    wrapper.joinComment(1)
+    expect(push).toHaveBeenCalledWith('/article/1/#comments')
   })
 })

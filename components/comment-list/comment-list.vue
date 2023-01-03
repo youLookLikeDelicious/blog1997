@@ -35,7 +35,7 @@
                 r="30"
               />
             </svg>
-            <p><span>{{ comment.user.name }}</span> <span>{{ comment.created_at | dateFormat }}</span> </p>
+            <p><span>{{ comment.user.name }}</span> <span>{{ comment.created_at }}</span> </p>
           </div>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div class="reply-content" v-html="comment.content" />
@@ -43,14 +43,10 @@
         <!---------------------------------- 评论按钮 begein ---------------------------- -->
         <div
           class="reply-menu"
-          @mouseover.stop
-          @mouseout.stop
-          @mouseenter="showReportBtn"
-          @mouseleave="hidReportBtn"
         >
-          <div>
+          <div class="report-btn-wrapper">
             <a
-              class="icofont-warning display-none"
+              class="icofont-warning"
               href="/"
               @click.prevent
               @click="reportIllegalInfo(comment.content, comment.id)"
@@ -88,13 +84,8 @@
           <dd class="reply-content" v-html="reply.content" />
           <!--                                 回复相关的按钮                     -->
           <dd class="clear">
-            <div
-              @mouseover.stop
-              @mouseout.stop
-              @mouseenter="showReportBtn"
-              @mouseleave="hidReportBtn"
-            >
-              <a class="icofont-warning display-none" href="/" @click.prevent @click="reportIllegalInfo(reply.content, reply.id)">举报</a>
+            <div class="report-btn-wrapper">
+              <a class="icofont-warning" href="/" @click.prevent @click="reportIllegalInfo(reply.content, reply.id)">举报</a>
               <a
                 v-if="reply.user_id == userId"
                 href="/"
@@ -155,7 +146,6 @@
 
 <script>
 import thumbUp from '~/components/common/thumb-up'
-import reportIllegalInfoHandler from '~/mixins/report-illegal-info/report-illegal-info-handler'
 import editorMixin from '~/mixins/umeditor'
 
 export default {
@@ -163,7 +153,7 @@ export default {
   components: {
     thumbUp
   },
-  mixins: [reportIllegalInfoHandler, editorMixin],
+  mixins: [editorMixin],
   props: {
     comments: {
       type: Array,
@@ -199,8 +189,10 @@ export default {
       return this.$store.state.user.id
     }
   },
-  updated () {
-    this.$nextTick(this.$initializeHTML)
+  beforeUpdate () {
+    if (!this.showReplyBtn) {
+      this.$nextTick(this.$initFormula)
+    }
   },
   mounted () {
     this.$nextTick(this.$initializeHTML)
@@ -427,6 +419,7 @@ export default {
           margin-top: .5rem;
           bottom: 0;
           height: 2.4rem;
+          color: $text-color;
           a{
             margin-left: 1.2rem;
             font-size: 1.2rem;
@@ -472,19 +465,23 @@ export default {
         }
         dt{
           margin-bottom: 1rem;
+          align-items: flex-start;
         }
         dl{
             &:first-child{
                 margin-top: 1.2rem;
             }
+            display: flex;
             padding-top: 1.2rem;
             box-sizing: border-box;
             border-top: 0.1rem solid#c6c6c6;
         }
         .clear{
-            display: block;
+            display: flex;
             text-align: right;
+            margin-left: auto;
             padding-right: 1.2rem;
+            align-items: flex-end;
             box-sizing: border-box;
             a{
                 margin-left: 1.2rem
@@ -551,6 +548,20 @@ export default {
     }
     &:active {
       color: rgb(2, 127, 230);
+    }
+  }
+}
+.report-btn-wrapper {
+  color: $text-color;
+  .icofont-warning {
+    opacity: 0;
+    // display: none;
+    transition: opacity .3s;
+  }
+  &:hover {
+    .icofont-warning {
+      opacity: 1;
+      display: inline-block;
     }
   }
 }

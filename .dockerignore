@@ -99,5 +99,9 @@ sw.*
 .cypress/videos
 
 test_output
-
+cypress/
 .nycrc
+.git
+.VSCodeCounter/
+test/
+package-lock.json

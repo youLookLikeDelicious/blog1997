@@ -121,6 +121,7 @@ server {
 这是由cypress测试工具，录制的E2E测试过程。作为演示素材
 [![Watch the video](https://raw.github.com/GabLeRoux/WebMole/master/ressources/WebMole_Youtube_Video.png)](http://go.plvideo.cn/front/video/preview?vid=43876a053ad92f5e3bcf91ab170ace07_4)
 
+### 打包镜像 
 
 ### FAQ（常见问题）
 - 如果想在Docker容器中运行E2E测试，需要设置参数 --shm-size=512m(默认是64M)，否则会崩溃

@@ -347,7 +347,7 @@ describe('test article page', () => {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: process.env.DOMAIN + article.$route.path
+          content: article.$route.path
         }
       ]
     })

@@ -58,7 +58,7 @@
                 class="join-comment"
                 :data-id="article.identity"
                 @click.stop.prevent
-                @click="joinComment($event)"
+                @click="joinComment(article.identity)"
               >
                 加入评论
                 <svg

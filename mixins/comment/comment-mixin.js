@@ -63,6 +63,8 @@ export default {
 
       // 追加评论的数据
       this.records[commentIndex].replies = this.records[commentIndex].replies.concat(comments)
+
+      this.$nextTick(this.$initializeHTML)
     }
   }
 }
