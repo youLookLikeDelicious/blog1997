@@ -112,7 +112,7 @@ export default {
     width: 100%;
     margin: 0 auto;
     position: relative;
-    padding-bottom: 2rem;
+    padding-bottom: 7.3rem;
     padding-top: 5rem;
     box-sizing: border-box;
     display: block;

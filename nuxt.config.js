@@ -110,7 +110,6 @@ export default {
     clientBaseURL: process.env.CLIENT_BASE_URL,
     weChatAppId: process.env.WEICHAT_APP_ID,
     gitClientId: process.env.GIT_CLIENT_ID,
-    gitCallBack: process.env.GIT_CALL_BACK,
     title: process.env.title,
     domain: process.env.DOMAIN,
     masterEmail: process.env.MASTER_EMAIL,

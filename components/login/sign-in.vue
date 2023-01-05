@@ -107,14 +107,14 @@ export default {
     //   this.$store.commit('globalState/setPromptMessage', { msg: '马上就好', status: true })
     // },
     loginByWeChat () {
-      this.openNewWindow(`https://open.weixin.qq.com/connect/qrconnect?appid=${this.$config.weChatAppId}&redirect_uri=${this.$config.weChatRedirect}&response_type=code&scope=snsapi_login&state=state`, '使用微信登陆')
+      this.openNewWindow(`https://open.weixin.qq.com/connect/qrconnect?appid=${this.$config.weChatAppId}&redirect_uri=${this.$config.domain}/sso/wechat&response_type=code&scope=snsapi_login&state=state`, '使用微信登陆')
     },
     /**
      * 点击git图标的行为
      * @param e
      */
     loginByGit () {
-      this.openNewWindow(`https://github.com/login/oauth/authorize?client_id=${this.$config.gitClientId}&redirect_uri=${this.$config.gitCallBack}`, '使用GIT登陆')
+      this.openNewWindow(`https://github.com/login/oauth/authorize?client_id=${this.$config.gitClientId}&redirect_uri=${this.$config.domain}/sso/github`, '使用GIT登陆')
     },
     /**
      * 打开新的窗口

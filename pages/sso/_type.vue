@@ -1,13 +1,13 @@
 <template>
   <div v-if="!inProgress" class="login-callback">
-    <span v-if="loginFaild">登陆失败</span>
+    <span v-if="loginFailed">登陆失败</span>
   </div>
   <WaitingInProgress v-else />
 </template>
 
 <script>
+import { getCsrfToken, sso } from '~/api/system'
 import WaitingInProgress from '~/components/common/waiting-in-progress'
-
 export default {
   name: 'LoginCallback',
   layout: 'login',
@@ -18,40 +18,22 @@ export default {
     return {
       showLoginBtn: false,
       inProgress: true,
-      loginFaild: false
+      loginFailed: false
     }
   },
-  mounted () {
+  async mounted () {
     // 获取参数
     const query = this.$route.query
     this.setInProgress(true)
 
-    switch (this.$route.params.type) {
-      // 使用qq登陆，授权成功的回调
-      case 'qq':
-        break
-      // 使用微信登陆，授权成功的回调
-      case 'weichat':
-        this.$axios.post('oauth/authorize?p=home&type=wechat&code=' + query.code)
-          .then((response) => {
-            window.opener.setUserInfo(response.data.data)
-          }).catch(() => {
-            this.loginFaild = true
-          }).finally(this.setInProgress)
-        break
-      // 使用git登陆，授权成功的回调
-      default:
-        if (query.code) {
-          this.$axios.post('oauth/authorize?p=home&code=' + query.code)
-            .then((response) => {
-              // 登陆成功
-              window.opener.setUserInfo(response.data.data)
-            }).catch((e) => {
-              this.loginFaild = true
-            }).finally(this.setInProgress)
-        }
-        break
-    }
+    await getCsrfToken()
+    const params = { code: query.code, p: 'home', type: this.$route.params.type }
+    sso(params)
+      .then((response) => {
+        window.opener.setUserInfo(response.data.data)
+      }).catch(() => {
+        this.loginFailed = true
+      }).finally(this.setInProgress)
   },
   methods: {
     setInProgress (state) {
