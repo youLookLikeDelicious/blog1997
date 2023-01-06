@@ -10,7 +10,6 @@
     "test:e2e": "cypress run --spec cypress/integration/**/*.spec.js",
     "coverage": "cross-env NODE_ENV=production nyc --reporter=lcov --reporter=text npm run test",
     "serve": "nuxt",
-    "generate": "nuxt generate",
     "start": "nuxt start",
     "cypress:open": "./node_modules/cypress/bin/cypress open",
     "codecov": "codecov",
