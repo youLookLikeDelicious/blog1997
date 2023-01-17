@@ -8,7 +8,7 @@
     >
       <backDrop v-if="visibleBackDrop.includes(index)" :gallery="article.gallery" width="90%" right="-5rem" />
       <header class="article_header">
-        <span>{{ article.created_at | dateFormat }}</span>
+        <span>{{ article.created_at }}</span>
       </header>
       <div class="user_info_wrap">
         <h1 class="title">
@@ -90,20 +90,21 @@
       <div class="article-summary" v-html="$initHTML(article)" />
       <tags :id="article.identity" :tags="article.tags" />
     </article>
-    <div v-if="p < pages && !inProgress" class="read-more-article">
+    <div v-if="hasMoreArticle && !inProgress" class="read-more-article">
       <a href="/" @click.stop.prevent @click="getMoreArticle">
         阅读更多
         <span>&gt;&gt;</span>
       </a>
     </div>
     <waiting-in-progress v-if="inProgress" />
-    <div v-if="p >= pages" class="there-is-no-more">
+    <div v-if="!hasMoreArticle" class="there-is-no-more">
       <span class="icofont-notification">{{ thereIsNoMoreData }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import tags from '@/components/index/article-tags'
 import waitingInProgress from './waiting-in-progress.vue'
 import articleLinkMixin from '~/mixins/article/article-link-mixin'
@@ -123,17 +124,10 @@ export default {
       }
     },
     // 当前页
-    p: {
-      type: Number,
+    hasMoreArticle: {
+      type: Boolean,
       default () {
-        return 1
-      }
-    },
-    // 总页数
-    pages: {
-      type: Number,
-      default () {
-        return 1
+        return false
       }
     },
     inProgress: {
@@ -147,9 +141,7 @@ export default {
     thereIsNoMoreData () {
       return this.articles.length ? ' 已经是全部了 |ω・）' : ' 暂无数据 |ω・）'
     },
-    visibleBackDrop () {
-      return this.$store.state.globalState.visibleBackDrop
-    }
+    ...mapGetters(['visibleBackDrop'])
   },
   updated () {
     this.$nextTick(this.$initializeHTML)

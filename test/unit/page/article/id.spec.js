@@ -7,7 +7,6 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(umeditor)
 
-
 localVue.use({
   install (vue) {
     vue.prototype.$initHTML = content => content
@@ -16,7 +15,6 @@ localVue.use({
         return h('img')
       }
     })
-    vue.filter('dateFormat', a => a)
   }
 })
 
@@ -413,26 +411,20 @@ describe('test article page', () => {
         .mockReturnValueOnce(Promise.resolve('resolve'))
     }
 
-    /**
-     * mock $responseHandler
-     */
-    const $responseHandler = jest.fn(() => 'return value')
-
     // 测试id 为空的情况
     const redirect = jest.fn()
-    let data = await Article.asyncData({ $responseHandler, params: { id: '' }, app: { $axios }, res: 'res', req: 'req', redirect })
+    let data = await Article.asyncData({ params: { id: '' }, app: { $axios }, res: 'res', req: 'req', redirect })
     expect($axios.get).not.toHaveBeenCalled()
     expect(redirect).toHaveBeenCalled()
 
     // 测试 返回404的情况
-    data = await Article.asyncData({ $responseHandler, params: { id: 'id' }, app: { $axios }, res: 'res', req: 'req', redirect })
+    data = await Article.asyncData({ params: { id: 'id' }, app: { $axios }, res: 'res', req: 'req', redirect })
     expect($axios.get).toHaveBeenCalled()
     expect(redirect).toHaveBeenCalledTimes(2)
 
     // 测试正常的数据
-    data = await Article.asyncData({ $responseHandler, params: { id: 'id' }, app: { $axios }, res: 'res', req: 'req' })
+    data = await Article.asyncData({ params: { id: 'id' }, app: { $axios }, res: 'res', req: 'req' })
     expect($axios.get).toHaveBeenCalledWith('article/id', 'req')
     expect(data).toBe('return value')
-    expect($responseHandler).toHaveBeenCalledWith('resolve', 'res')
   })
 })

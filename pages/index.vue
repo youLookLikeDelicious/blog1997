@@ -1,17 +1,16 @@
 <template>
   <div>
-    <NewArticle v-if="articles.length" :article="articles[0]" />
+    <new-article v-if="data.length" :article="data[0]" />
     <div class="article_list_rail clear-float">
-      <Rail
+      <rail
         :article-num="articleNum"
         :message-num="messageNum"
         :pop-articles="popArticles"
       />
-      <ArticleList
-        v-if="articles.length > 1"
-        :articles="articles.slice(1)"
-        :p="p"
-        :pages="pages"
+      <article-list
+        v-if="data.length > 1"
+        :articles="data.slice(1)"
+        :has-more-article="query.page < meta.last_page"
         :in-progress="inProgress"
         @getMoreArticle="getMoreArticle"
       />
@@ -20,6 +19,7 @@
 </template>
 
 <script>
+import { getIndex } from '~/api/system'
 import Rail from '~/components/index/rail'
 import NewArticle from '~/components/index/new-article'
 import ArticleList from '~/components/common/article-list'
@@ -36,18 +36,16 @@ export default {
   data () {
     return {
       messageNum: 0,
-      articles: [],
+      data: [],
       popArticles: [],
-      getMoreUrl: 'article',
-      articleNum: 0,
-      pages: 0,
-      p: 1 // 当前页
+      articleNum: 0
     }
   },
-  async asyncData ({ app, $responseHandler, req, res }) {
-    const data = await app.$axios.get('', req)
-      .then(response => $responseHandler(response, res))
+  async asyncData ({ params }) {
+    const data = await getIndex(params)
+      .then(res => res.data)
       .catch((e) => {
+        return {}
       })
     return data
   },

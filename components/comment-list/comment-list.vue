@@ -1,7 +1,7 @@
 <!--评论列表-->
 // props Array comments
 <!--
-<commentList
+<comment-list
     :comments="records"
     @getMoreReply="getMoreReply"
     @appendReply="appendReply"
@@ -46,13 +46,14 @@
         >
           <div class="report-btn-wrapper">
             <a
+              v-if="user.id"
               class="icofont-warning"
               href="/"
               @click.prevent
               @click="reportIllegalInfo(comment.content, comment.id)"
             >举报</a>
             <a
-              v-if="comment.user_id == userId"
+              v-if="comment.user_id == user.id"
               href="/"
               class="delete"
               @click.stop.prevent
@@ -66,28 +67,29 @@
               :thumbs="comment.thumbs"
               :liked="comment.liked"
               :data-comment-info="index"
-              @thumbUp="thumbUp"
+              @thumbUp="comment.liked += 1"
             />
           </div>
         </div>
       </div>
       <!---------------------------------- 评论按钮 end ---------------------------- -->
-      <!-------------------------------- 评论的回复 begein ---------------------------- -->
-      <div v-if="comment.replies && comment.replies.length" class="reply-content-wrap">
+      <!-------------------------------- 评论的回复 begin ---------------------------- -->
+      {{ (replies = comment.appendedReplies ? comment.appendedReplies.concat(comment.replies) : comment.replies, void 0) }}
+      <div v-if="(replies.length)" class="reply-content-wrap">
         <dl
-          v-for="(reply, ind) in comment.replies"
+          v-for="(reply, ind) in replies"
           :key="ind"
           class="relative-position"
         >
-          <dt>{{ getReplyRelaction(reply) }}</dt>
+          <dt>{{ getReplyRelation(reply) }}</dt>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <dd class="reply-content" v-html="reply.content" />
           <!--                                 回复相关的按钮                     -->
           <dd class="clear">
             <div class="report-btn-wrapper">
-              <a class="icofont-warning" href="/" @click.prevent @click="reportIllegalInfo(reply.content, reply.id)">举报</a>
+              <a v-if="user.id" class="icofont-warning" href="/" @click.prevent @click="reportIllegalInfo(reply.content, reply.id)">举报</a>
               <a
-                v-if="reply.user_id == userId"
+                v-if="reply.user_id == user.id"
                 href="/"
                 class="delete"
                 @click.stop.prevent
@@ -95,20 +97,20 @@
               >删除</a>
               <a
                 href="/"
-                @click.prevent="clickReplyBtn($event, index, ind)"
+                @click.prevent="clickReplyBtn($event, index, reply.id)"
               >回复</a>
               <thumbUp
                 :id="reply.id"
                 :thumbs="reply.thumbs"
                 :liked="reply.liked"
                 :data-comment-info="`${index}-${ind}`"
-                @thumbUp="thumbUp"
+                @thumbUp="reply.liked += 1"
               />
             </div>
           </dd>
         </dl>
         <div class="more-reply">
-          <a v-if="comment.commented > comment.replies.length" href="/" @click.prevent @click="getMoreReply($event, comment.id, comment.replies.length)">显示更多>></a>
+          <a v-if="comment.commented > comment.replies.length" href="/" @click.prevent @click="getMoreReply(comment.id, comment.replies.length)">显示更多>></a>
         </div>
       </div>
       <div />
@@ -116,12 +118,12 @@
     </article>
     <!-- 获取更多评论 begin -->
     <div
-      v-if="p < pages"
+      v-if="showMoreComment"
       class="more-comments"
     >
       <a
         href="/"
-        @click.prevent="$emit('getMoreComments', p + 1)"
+        @click.prevent="$emit('getMoreComments')"
       >获取更多评论 <i class="icofont-caret-down" /></a>
     </div>
     <!-- 获取更多评论 end -->
@@ -145,8 +147,10 @@
 </template>
 
 <script>
-import thumbUp from '~/components/common/thumb-up'
+import { mapGetters } from 'vuex'
 import editorMixin from '~/mixins/umeditor'
+import thumbUp from '~/components/common/thumb-up'
+import { deleteComment, storeComment } from '~/api/comment'
 
 export default {
   name: 'CommentList',
@@ -161,16 +165,10 @@ export default {
         return []
       }
     },
-    p: {
-      type: Number,
+    showMoreComment: {
+      type: Boolean,
       default () {
-        return 0
-      }
-    },
-    pages: {
-      type: Number,
-      default () {
-        return 0
+        return false
       }
     }
   },
@@ -178,16 +176,14 @@ export default {
     return {
       UM: undefined,
       showReplyBtn: false, // 显示回复组件的提交|取消按钮
-      replyIndex: false, // 被评论的评论id,
+      replyId: false, // 被评论的评论id,
       commentIndex: '',
       editorContent: '', // 用户创建的评论
       observer: ''
     }
   },
   computed: {
-    userId () {
-      return this.$store.state.user.id
-    }
+    ...mapGetters(['user'])
   },
   beforeUpdate () {
     if (!this.showReplyBtn) {
@@ -243,7 +239,7 @@ export default {
         return true
       }
 
-      this.$axios.post('comment/' + commentId, { _method: 'DELETE' })
+      deleteComment(commentId)
         .then((response) => {
           // 删除成功
           const affectRows = response.data.data.rows
@@ -255,10 +251,10 @@ export default {
      *
      * @param e
      * @param commentIndex 评论的索引
-     * @param replyIndex 回复的索引
+     * @param replyId 回复的id
      * @return
      */
-    clickReplyBtn (e, commentIndex, replyIndex) {
+    clickReplyBtn (e, commentIndex, replyId = '') {
       // 如果用户没有登录，显示登录窗口
       if (!this.$userHasSignedIn()) {
         return
@@ -266,12 +262,12 @@ export default {
 
       // 如果回复按钮不是当前的评论
       // eslint-disable-next-line eqeqeq
-      if (this.commentIndex != commentIndex || this.replyIndex != replyIndex) {
+      if (this.commentIndex != commentIndex || this.replyId != replyId) {
         this.hidReplyBox()
       }
 
       this.commentIndex = commentIndex
-      this.replyIndex = replyIndex
+      this.replyId = replyId
 
       // 在评论下方追加富文本元素,并启动显示动画
       e.target.parentNode.parentNode.parentNode.appendChild(this.$refs.replyEditorBox)
@@ -290,22 +286,20 @@ export default {
       }
 
       const comment = this.comments[this.commentIndex]
-      // 获取回复的模型
-      const reply = !isNaN(this.replyIndex) ? comment.replies[this.replyIndex] : comment
 
       // 生成提交的表单数据
       const postData = {
-        able_id: reply.id,
+        able_id: this.replyId || comment.id,
         content: this.editorContent,
         able_type: 'comment'
       }
 
-      this.$axios.post('comment', postData)
+      storeComment(postData)
         .then((response) => {
           this.hidReplyBox()
           const data = response.data.data
           // 将提交的数据插入评论列表中
-          data.name = this.$store.state.user.name
+          data.name = this.user.name
           this.$emit('appendReply', [data], true)
         })
     },
@@ -316,7 +310,7 @@ export default {
      * 获取回复区的用户关系 x-回复-y: | x 回复:
      * @param reply
      */
-    getReplyRelaction (reply) {
+    getReplyRelation (reply) {
       if (reply.level === 2) {
         return `${reply.user.name} 回复: `
       }
@@ -326,23 +320,8 @@ export default {
     /**
      * 获取更多的回复
      */
-    getMoreReply (e, rootId, offset) {
+    getMoreReply (rootId, offset) {
       this.$emit('getMoreReply', { rootId, offset })
-    },
-    /**
-     * 修改用户的点赞状态
-     * @param e
-     */
-    thumbUp (e) {
-      const commentInfo = e.target.parentElement.parentElement.getAttribute('data-comment-info').split('-')
-
-      // 以及评论，1 ，二级评论1-12
-      const comment = commentInfo.length === 1 ? this.comments[commentInfo[0]] : this.comments[commentInfo[0]].replies[commentInfo[1]]
-
-      if (!comment.thumbs) {
-        comment.thumbs = true
-      }
-      ++comment.liked
     },
     /**
      * 举报非法信息

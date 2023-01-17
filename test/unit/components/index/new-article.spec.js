@@ -8,9 +8,6 @@ localVue.component('backDrop', {
   }
 })
 
-const dateFormat = jest.fn()
-localVue.filter('dateFormat', dateFormat)
-
 localVue.use({
   install (vue) {
     vue.prototype.$initHTML = a => a.summary
@@ -72,8 +69,6 @@ describe('test new article component', () => {
     expect($el.querySelector('h1').innerHTML).toContain(article.title)
     // 期望作者名被 加载
     expect($el.querySelector('.user-name').innerHTML).toContain(article.author.name)
-    // 期望 dateFormat filter被调用
-    expect(dateFormat).toHaveBeenCalled()
     // 期望keyword组件被渲染
     expect(wrapper.findComponent({ name: 'keywords' })).toBeTruthy()
   })

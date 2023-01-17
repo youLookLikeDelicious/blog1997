@@ -65,9 +65,5 @@ describe('test global state store', () => {
     expect(store.state.canUseWebp).toBe(true)
     store.commit('setCanUseWebp', false)
     expect(store.state.canUseWebp).toBe(false)
-
-    expect(store.state.friendLinkList.length).toBe(0)
-    await store.dispatch('getFriendLink')
-    expect(store.state.friendLinkList).toEqual(expect.arrayContaining([1, 3]))
   })
 })

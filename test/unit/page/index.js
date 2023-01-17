@@ -77,18 +77,11 @@ describe('test index page', () => {
         .mockReturnValueOnce(Promise.reject(error))
     }
 
-    /**
-     * mock $responseHandler
-     */
-    const $responseHandler = jest.fn(() => 'return value')
-
-    let data = await Index.asyncData({ $responseHandler, app: { $axios }, res: 'res', req: 'req' })
+    let data = await Index.asyncData({ app: { $axios }, res: 'res', req: 'req' })
     expect($axios.get).toHaveBeenCalledWith('', 'req')
     expect(data).toBe('return value')
-    expect($responseHandler).toHaveBeenCalledWith('resolve', 'res')
 
-    data = await Index.asyncData({ $responseHandler, $axios, res: 'res', app: { $axios }, req: 'req' })
-    expect($responseHandler.mock.calls.length).toBe(1)
+    data = await Index.asyncData({ $axios, res: 'res', app: { $axios }, req: 'req' })
     expect(data).not.toBe('return value')
   })
 })

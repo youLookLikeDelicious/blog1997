@@ -5,7 +5,7 @@
     @leave="leave"
   >
     <div
-      v-if="$store.state.globalState.showLogin"
+      v-if="showLogin"
       class="login-wrap"
     >
       <div class="login">
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SignIn from './sign-in'
 import SignUp from './sign-up'
 import ForgotPassword from './forgot-password'
@@ -53,6 +54,9 @@ export default {
       captchaSuffix: Math.random(),
       childComponent: SignIn // 当前的子组件
     }
+  },
+  computed: {
+    ...mapGetters(['showLogin'])
   },
   methods: {
     /**

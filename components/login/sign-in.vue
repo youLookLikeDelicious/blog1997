@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { signIn } from '~/api/user'
+
 export default {
   name: 'SignIn',
   props: {
@@ -94,7 +96,7 @@ export default {
       let { email, password } = this.model
       email = this.$encryptor.encrypt(email)
       password = this.$encryptor.encrypt(password)
-      this.$axios.post('/auth/login', { ...this.model, email, password })
+      signIn({ ...this.model, email, password })
         .then(response => response.data.data)
         .then((user) => {
           this.$store.commit('user/setUser', user)

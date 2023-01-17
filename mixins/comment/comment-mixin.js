@@ -1,13 +1,14 @@
+import { getReply } from '~/api/comment'
+
 export default {
   methods: {
     /**
     * 获取更多的回复
+    *
     * @param rootId
-    * @param offset
     */
     getMoreReply ({ rootId, offset }) {
-      // 开始请求
-      this.$axios.get(`comment/reply/${rootId}/${offset}`)
+      getReply(rootId, offset)
         .then((response) => {
           if (response.data.data.length) {
             this.appendReply(response.data.data)
@@ -16,6 +17,7 @@ export default {
     },
     /**
      * 删除评论
+     *
      * @param commentId 评论id
      * @param level 评论层级
      * @param commentIndex 一级评论的索引
@@ -23,13 +25,12 @@ export default {
     deleteComment ({ commentId, level, commentIndex, affectRows }) {
       this.commented -= affectRows // affectRow为负数
 
-      // eslint-disable-next-line eqeqeq
-      if (level == '1') {
-        this.records.splice(commentIndex, 1)
+      if (+level === 1) {
+        this.comments.splice(commentIndex, 1)
         return
       }
-
-      const replies = this.records[commentIndex].replies
+      this.comments[commentIndex].commented -= 1
+      const replies = this.comments[commentIndex].replies
       const replyIndex = replies.findIndex((item) => {
       // eslint-disable-next-line eqeqeq
         return item.id == commentId
@@ -43,26 +44,36 @@ export default {
      * @param isNew 是新追加的
      */
     appendReply (comments, isNew = false) {
-      let commentId = 0
+      const commentId = comments[0].root_id
+      const commentIndex = this.comments.findIndex((item) => {
+        // eslint-disable-next-line
+          return item.id == commentId
+      })
 
       // 获取被评论的索引
       if (isNew) {
+        if (!this.comments[commentIndex].appendedReplies) {
+          this.$set(this.comments[commentIndex], 'appendedReplies', comments)
+        } else {
+          this.comments[commentIndex].appendedReplies.unshift(...comments)
+        }
         this.commented += 1
       }
 
-      commentId = comments[0].root_id
-
-      const commentIndex = this.records.findIndex((item) => {
-      // eslint-disable-next-line
-        return item.id == commentId
-      })
-
-      if (commentId === -1 || !this.records[commentIndex]) {
+      if (commentId === -1 || !this.comments[commentIndex]) {
         return
       }
 
-      // 追加评论的数据
-      this.records[commentIndex].replies = this.records[commentIndex].replies.concat(comments)
+      // 获取下一页的数据
+      if (!isNew) {
+        // 移除新追加的数据
+        if (this.comments[commentIndex].appendedReplies) {
+          this.comments[commentIndex].appendedReplies = this.comments[commentIndex].appendedReplies.filter((reply) => {
+            return !comments.find(comment => comment.id === reply.id)
+          })
+        }
+        this.comments[commentIndex].replies = this.comments[commentIndex].replies.concat(comments)
+      }
 
       this.$nextTick(this.$initializeHTML)
     }

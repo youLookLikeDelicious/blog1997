@@ -2,7 +2,6 @@ import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import umeditor from '@blog1997/vue-umeditor/test'
 import commentList from '~/components/comment-list/comment-list'
-import { dateFormat } from '~/plugins/ssr/filter'
 import animate from '~/test/util/animate'
 import avatar from '~/components/common/avatar'
 
@@ -12,7 +11,6 @@ import avatar from '~/components/common/avatar'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(umeditor)
-localVue.filter('dateFormat', dateFormat)
 localVue.use(animate)
 localVue.component('avatar', avatar)
 const $userHasSignedIn = jest.fn().mockReturnValueOnce(false).mockReturnValueOnce(false)
@@ -207,8 +205,6 @@ describe('test comment list component', () => {
     expect(avatarComponent.exists()).toBe(true)
     // 2、测试用户名
     expect(commentContent.querySelector('.stamp > p').innerHTML).toContain(comments[0].user.name)
-    // 3、测试用评论事件
-    expect(commentContent.querySelector('.stamp > p').innerHTML).toContain(dateFormat(comments[0].created_at))
     // 4、测试评论的内容
     expect(commentContent.querySelector('.reply-content').innerHTML).toContain(comments[0].content)
 

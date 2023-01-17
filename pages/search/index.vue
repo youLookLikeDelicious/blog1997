@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!searchInProgress">
+  <div v-if="!searchInProgress" class="search-wrapper clear-float">
     <div class="search-header">
       <section>
         <span>{{ currentKeyword }}</span>
@@ -33,14 +33,13 @@
             @click="search('commented')"
           >评论最多</a>
         </div>
-        <div>共 {{ articleNum }} 个结果</div>
+        <div>共 {{ meta.total }} 个结果</div>
       </div>
     </div>
-    <ArticleList
-      v-if="articles.length"
-      :articles="articles"
-      :p="p"
-      :pages="pages"
+    <article-list
+      v-if="data.length"
+      :articles="data"
+      :has-more-article="query.page < meta.last_page"
       :in-progress="inProgress"
       @getMoreArticle="getMoreArticle"
     />
@@ -53,6 +52,7 @@
 </template>
 
 <script>
+import { searchArticle } from '~/api/article'
 import ArticleList from '~/components/common/article-list'
 import articleListMixin from '~/mixins/article/article-list-mixin'
 import WaitingInProgress from '~/components/common/waiting-in-progress'
@@ -66,10 +66,7 @@ export default {
   mixins: [articleListMixin],
   data () {
     return {
-      articleNum: 0,
-      pages: 0,
-      searchInProgress: false, // mixin中已经定义
-      // articles: [], mixin中已定义
+      searchInProgress: false,
       orderBy: 'mixed' // 当前的排序方式
     }
   },
@@ -119,17 +116,13 @@ export default {
       this.searchInProgress = true
       this.orderBy = orderBy
       const query = this.getQueryStack(orderBy)
-      this.$axios
-        .post(`article/search`, query)
-        .then(response => response.data.data)
+      searchArticle(query)
+        .then(response => response.data)
         .then((data) => {
           const keyword = data.currentKeyword
-          // 该值不能直接赋值
-          delete data.currentKeyword
-          Object.assign(this, data)
+          this.data = data.data
           this.$store.commit('search/setSearchConfig', { keyword })
-          // 将当前页设为1
-          this.p = 1
+          this.meta = data.meta
         })
         .catch(() => {})
         .finally(() => {
@@ -143,14 +136,14 @@ export default {
      * @returns {array}
      */
     getQueryStack (orderBy) {
-      const seftQuery = this.$route.query
+      const thisQuery = this.$route.query
       const query = { orderBy }
 
-      if (seftQuery.keyword) {
-        query.keyword = seftQuery.keyword
+      if (thisQuery.keyword) {
+        query.keyword = thisQuery.keyword
       }
-      if (seftQuery.tag_id) {
-        query.tag_id = seftQuery.tag_id
+      if (thisQuery.tag_id) {
+        query.tag_id = thisQuery.tag_id
       }
 
       return query
@@ -160,42 +153,44 @@ export default {
 </script>
 
 <style lang="scss">
-.search-header {
-  margin-bottom: 8rem;
-  .order-by {
-    font-size: 1.4rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    div{
-      margin-top: .7rem;
-      white-space: nowrap;
+.search-wrapper {
+  .search-header {
+    margin-bottom: 8rem;
+    .order-by {
+      font-size: 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      div{
+        margin-top: .7rem;
+        white-space: nowrap;
+      }
+      a {
+        margin-left: 1rem;
+      }
+      .on {
+        color: $light-font-color;
+      }
     }
-    a {
-      margin-left: 1rem;
-    }
-    .on {
-      color: $light-font-color;
+    section {
+      font-size: 2.7rem;
+      margin-bottom: 0.7rem;
+      font-weight: bold;
+      span {
+        font-size: 5rem;
+        @extend %text-gradient-blue;
+      }
+      margin-bottom: 2rem;
     }
   }
-  section {
-    font-size: 2.7rem;
-    margin-bottom: 0.7rem;
-    font-weight: bold;
-    span {
+  .search-not-fond {
+    i {
       font-size: 5rem;
-      @extend %text-gradient-blue;
     }
-    margin-bottom: 2rem;
+    p {
+      margin-top: 1rem;
+    }
+    text-align: center;
   }
-}
-.search-not-fond {
-  i {
-    font-size: 5rem;
-  }
-  p {
-    margin-top: 1rem;
-  }
-  text-align: center;
 }
 </style>

@@ -5,7 +5,7 @@
   <article v-if="article.identity" class="hero-article">
     <backDrop :gallery="article.gallery" :is-hero="true" />
     <header class="article_header">
-      <span>最新文章</span> <span>{{ article.created_at | dateFormat }}</span>
+      <span>最新文章</span> <span>{{ article.created_at}}</span>
     </header>
     <h1 class="title">
       <nuxt-link :to="'/article/' + article.identity">

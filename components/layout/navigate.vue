@@ -11,21 +11,18 @@
     <div ref="headerItem" data-display="flex" class="header-item">
       <div class="menu">
         <ul>
-          <li :class="{'on': routeName == 'index'}">
+          <li :class="{'on': routeName === 'index'}">
             <a href="/" @click.stop.prevent @click="clickLink('/')">
-              <!-- <i class="icofont-home" />首页 -->
               首页
             </a>
           </li>
-          <li :class="{'on': routeName == 'tag-id'}">
+          <li :class="{'on': routeName === 'tag-tag_id'}">
             <a href="/tag" @click.stop.prevent @click="clickLink('/tag')">
-              <!-- <i class="icofont-memorial" />专题 -->
               分类
             </a>
           </li>
-          <li :class="{'on': routeName == 'leave-message'}">
+          <li :class="{'on': routeName === 'leave-message'}">
             <a href="/leave-message" @click.stop.prevent @click="clickLink('/leave-message')">
-              <!-- <i class="icofont-comment" />留言 -->
               讨论区
             </a>
           </li>
@@ -55,6 +52,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { logout } from '~/api/user'
+
 export default {
   name: 'Navigate',
   inject: ['reload'],
@@ -67,9 +67,7 @@ export default {
     routeName () {
       return this.$route.name
     },
-    user () {
-      return this.$store.state.user
-    }
+    ...mapGetters(['user', 'searchKeyword'])
   },
   watch: {
     routeName () {
@@ -79,8 +77,8 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.search.keyword) {
-      this.keyword = this.$store.state.search.keyword
+    if (this.searchKeyword) {
+      this.keyword = this.searchKeyword
     }
   },
   methods: {
@@ -93,7 +91,7 @@ export default {
       this.$store.commit('globalState/setShowLogin', true)
     },
     logout () {
-      this.$axios.post('oauth/logout')
+      logout()
         .then((response) => {
           // 清空store中的用户信息
           this.$store.commit('user/clearUserInfo')
@@ -126,7 +124,7 @@ export default {
      */
     clickLink (to) {
       this.$router.push(to)
-      // 如果屏幕像素小于1200 并且.hreader-item的元素高度不等于 0 ，将菜单栏向上滑动
+      // 如果屏幕像素小于1200 并且.header-item的元素高度不等于 0 ，将菜单栏向上滑动
       if (this.isMobileModel()) {
         this.toggleNavigate()
       }

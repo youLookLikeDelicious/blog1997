@@ -36,6 +36,8 @@
 <script>
 import passwordMix from '@bit/blog1997.vue-collection.password-mixin'
 import passwordStrength from '@bit/blog1997.vue-collection.password-strength/password-strength.vue'
+import { signUp } from '~/api/user'
+
 export default {
   name: 'SignUp',
   components: {
@@ -81,7 +83,7 @@ export default {
         return
       }
       this.isRequesting = true
-      this.$axios.post('oauth/sign-up', this.model)
+      signUp(this.model)
         .then(() => this.$emit('close'))
         .catch((e) => {
           this.$emit('refreshCaptcha')

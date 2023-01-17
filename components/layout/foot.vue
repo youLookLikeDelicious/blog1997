@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Foot',
   data () {
@@ -21,9 +22,7 @@ export default {
     }
   },
   computed: {
-    friendLinkList () {
-      return this.$store.state.globalState.friendLinkList
-    }
+    ...mapGetters(['friendLinkList'])
   }
 }
 </script>

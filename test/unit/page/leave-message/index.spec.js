@@ -15,7 +15,6 @@ localVue.use({
         return 'img'
       }
     })
-    vue.filter('dateFormat', a => a)
   }
 })
 
@@ -293,18 +292,11 @@ describe('test leave message page', () => {
         .mockReturnValueOnce(Promise.reject(error))
     }
 
-    /**
-     * mock $responseHandler
-     */
-    const $responseHandler = jest.fn(() => 'return value')
-
-    let data = await leaveMessage.asyncData({ $responseHandler, app: { $axios }, res: 'res', req: 'req' })
+    let data = await leaveMessage.asyncData({ app: { $axios }, res: 'res', req: 'req' })
     expect($axios.get).toHaveBeenCalledWith('leave-message', 'req')
     expect(data).toBe('return value')
-    expect($responseHandler).toHaveBeenCalledWith('resolve', 'res')
 
-    data = await leaveMessage.asyncData({ $responseHandler, $axios, res: 'res', app: { $axios }, req: 'req' })
-    expect($responseHandler.mock.calls.length).toBe(1)
+    data = await leaveMessage.asyncData({ $axios, res: 'res', app: { $axios }, req: 'req' })
     expect(data).not.toBe('return value')
   })
 })

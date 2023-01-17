@@ -18,7 +18,7 @@ const emptyUser = { id: '' }
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
   if (process.browser) {
-    const message = response.data.message
+    const message = response.message
     if (message && message !== 'success') {
       window.$nuxt.$store.commit('globalState/setPromptMessage', { msg: message, status: true })
     }
@@ -39,7 +39,7 @@ axios.interceptors.response.use(function (response) {
     }
 
     let errorMessage = ''
-    const errors = response.data.errors
+    const errors = response.errors
     // 获取报错的信息
     if (errors) {
       for (const key in errors) {
@@ -66,6 +66,9 @@ axios.interceptors.response.use(function (response) {
 
 // 如果在客户端中进行请求，开启等待动画
 axios.interceptors.request.use(function (config) {
+  if (/\/$/.test(config.url)) {
+    config.url = config.url.slice(0, -1)
+  }
   if (process.browser) {
     // 如果header不是对象
     if (Object.prototype.toString.call(config.headers) !== '[object Object]') {

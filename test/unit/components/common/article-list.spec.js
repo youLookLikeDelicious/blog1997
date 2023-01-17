@@ -29,10 +29,6 @@ localVue.use({
   }
 })
 
-const dateFormat = jest.fn()
-// 将unix时间戳转为字符串
-localVue.filter('dateFormat', dateFormat)
-
 // mock plugins
 localVue.use({
   install (vue) {
@@ -72,8 +68,6 @@ describe('test article-list component', () => {
     expect(wrapper.vm.thereIsNoMoreData).toBe(' 暂无数据 |ω・）')
     // 阅读更多标签不会渲染
     expect($el.querySelector('.read-more-article')).toBeNull()
-    // 没有调用filter
-    expect(dateFormat.mock.calls.length).toBe(0)
   })
 
   // 测试props.articles不为空的状态
@@ -148,10 +142,6 @@ describe('test article-list component', () => {
     expect($el.querySelector('.there-is-no-more').innerHTML).toMatch(/.+?已经是全部了.*/)
     // 阅读更多标签不会渲染
     expect($el.querySelector('.read-more-article')).toBeNull()
-
-    // 调用三次filter
-    expect(dateFormat.mock.calls.length).toBe(articles.length)
-    expect(dateFormat.mock.calls[0][0]).toBe(articles[0].created_at)
 
     // 更改数据
     wrapper.setProps({

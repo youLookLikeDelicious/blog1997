@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { resetPassword } from '~/api/user'
+
 export default {
   name: 'ForgotPassword',
   data () {
@@ -36,7 +38,7 @@ export default {
         return
       }
       this.isRequesting = true
-      this.$axios.post('/user/password/reset', this.model)
+      resetPassword(this.model)
         .then(() => this.$emit('close'))
         .finally(() => {
           this.isRequesting = false

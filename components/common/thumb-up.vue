@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { thumbUp } from '~/api/system'
+
 export default {
   name: 'ThumbUp',
   props: {
@@ -143,14 +145,14 @@ export default {
     submitPost (e) {
       // 生成表单数据
       const postData = {
-        id: this.id,
-        category: this.category
+        able_id: this.id,
+        able_type: this.category
       }
 
       // 设置当前的状态未正在上传数据
       this.isUploading = true
 
-      this.$axios.post(`thumb-up`, postData)
+      thumbUp(postData)
         .then(() => {
           // 修改当前用户的点赞状态
           this.$emit('thumbUp', e)

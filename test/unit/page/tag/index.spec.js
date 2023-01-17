@@ -61,25 +61,15 @@ describe('test tag page', () => {
         .mockReturnValueOnce(Promise.reject(error))
     }
 
-    /**
-     * mock $responseHandler
-     */
-    const $responseHandler = jest.fn(() => 'return value')
-    const params = {
-      id: ''
-    }
-
-    let data = await Tag.asyncData({ $responseHandler, app: { $axios }, params, res: 'res', req: 'req' })
+    let data = await Tag.asyncData({ app: { $axios }, params, res: 'res', req: 'req' })
     expect($axios.get).toHaveBeenCalledWith('/article/tags', 'req')
     expect(data).toBe('return value')
-    expect($responseHandler).toHaveBeenCalledWith('resolve', 'res')
 
     params.id = 2
-    await Tag.asyncData({ $responseHandler, app: { $axios }, params, res: 'res', req: 'req' })
+    await Tag.asyncData({ app: { $axios }, params, res: 'res', req: 'req' })
     expect($axios.get).toHaveBeenCalledWith('/article/tags?tag_id=2', 'req')
 
-    data = await Tag.asyncData({ $responseHandler, $axios, res: 'res', params, app: { $axios }, req: 'req' })
-    expect($responseHandler.mock.calls.length).toBe(2)
+    data = await Tag.asyncData({ $axios, res: 'res', params, app: { $axios }, req: 'req' })
     expect(data).not.toBe('return value')
   })
 })

@@ -1,14 +1,13 @@
 <template>
-  <div v-if="show" class="waiting" />
+  <div v-if="waiting" class="waiting" />
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Waiting',
   computed: {
-    show () {
-      return this.$store.state.globalState.waiting
-    }
+    ...mapGetters(['waiting'])
   },
   updated () {
     this.waitingAnimate()

@@ -33,11 +33,11 @@
           </p>
           <p>
             <span>创建时间</span>
-            <span>{{ article.created_at | dateFormat }}</span>
+            <span>{{ article.created_at }}</span>
           </p>
           <p>
             <span>更新时间</span>
-            <span>{{ article.updated_at | dateFormat }}</span>
+            <span>{{ article.updated_at }}</span>
           </p>
           <p>
             <span>阅读</span>
@@ -140,7 +140,7 @@
             @thumbUp="thumbUp"
           />
           <a
-            v-if="$store.state.user.id"
+            v-if="user.id"
             href="/"
             class="icofont-warning float-right report-article-btn"
             @click.prevent
@@ -181,11 +181,10 @@
         <!--------------------------------------------富文本编辑器结束-------------------------------------------->
         <!--------------------------------------------文章评论列表开始-------------------------------------------->
         <div class="article-comments">
-          <commentList
-            :p="p"
-            :pages="pages"
-            :comments="records"
-            @getMoreComments="getComments"
+          <comment-list
+            :show-more-comment="query.page < query.last_page"
+            :comments="comments"
+            @getMoreComments="() => {query.page += 1; getComments()}"
             @getMoreReply="getMoreReply"
             @appendReply="appendReply"
             @deleteComment="deleteComment"
@@ -198,12 +197,13 @@
 </template>
 
 <script>
-import commentList from '~/components/comment-list/comment-list'
+import { mapGetters } from 'vuex'
+import editorMixin from '~/mixins/umeditor'
 import thumbUp from '~/components/common/thumb-up'
 import tags from '~/components/index/article-tags'
 import commentMixin from '~/mixins/comment/comment-mixin'
-import editorMixin from '~/mixins/umeditor'
 import { getArticleInfo, getComments } from '~/api/article'
+import commentList from '~/components/comment-list/comment-list'
 export default {
   components: {
     commentList,
@@ -222,9 +222,8 @@ export default {
       },
       commented: 0,
       UM: undefined,
-      p: 0,
-      pages: 0,
-      records: [],
+      comments: [],
+      query: { page: 1, last_page: 1 },
       processBarPercent: '0%', // 进度条进度
       cateList: [], // 目录信息
       maxDimension: 5,
@@ -273,36 +272,33 @@ export default {
     }
   },
   computed: {
-    user () {
-      return this.$store.state.user.id
-    }
+    ...mapGetters(['user'])
   },
   watch: {
     /**
      * 用户登陆登出，重新刷新页面
      * 刷新和用户相关的状态
      */
-    user () {
+    'user.id' () {
       // 重新刷新当前页面
-      this.$axios.get(this.$route.fullPath)
+      getArticleInfo(this.$route.params.id)
         .then((response) => {
           Object.assign(this, response.data.data)
         })
     }
   },
-  async asyncData ({ app, $responseHandler, redirect, params, req, res }) {
+  async asyncData ({ redirect, params }) {
     if (!params.id) {
       return redirect('/404')
     }
 
-    const data = await getArticleInfo(params.id, req)
-      .then(response => $responseHandler(response, res))
+    const data = await getArticleInfo(params.id)
+      .then(res => res.data.data)
       .catch((e) => {
         if (e.response.status === 404) {
           redirect('/404')
         }
       })
-
     return data
   },
   mounted () {
@@ -317,7 +313,7 @@ export default {
     document.addEventListener('scroll', this.scrollHandler)
     // 获取评论
     this.getComments()
-    this.genereateCateList()
+    this.generateCateList()
     this.$nextTick(this.$initializeHTML)
   },
   beforeDestroy () {
@@ -329,7 +325,7 @@ export default {
      */
     submitComments () {
       // 如果用户没有登录，先让用户登录
-      if (!this.$store.state.user.id) {
+      if (!this.user.id) {
         this.$store.commit('globalState/setShowLogin', {
           msg: '',
           status: false
@@ -360,9 +356,9 @@ export default {
           // 追加评论到第一条
           this.commented += 1
           const data = response.data.data
-          data.avatar = this.$store.state.user.avatar
-          data.name = this.$store.state.user.name
-          this.records.unshift(data)
+          data.avatar = this.user.avatar
+          data.name = this.user.name
+          this.comments.unshift(data)
           this.setEditorContent('')
         })
     },
@@ -374,25 +370,14 @@ export default {
       this.UM = um
     },
     /**
-     * 追加评论
-     * @param obj
-     */
-    appendComments ({ p, pages, records }) {
-      if (Array.isArray(records)) {
-        this.records = this.records.concat(records)
-      }
-      this.p = p
-      this.pages = pages
-    },
-    /**
      * 获取更多的评论
      * @param  {string} type
      */
     getComments () {
-      getComments(this.article.identity, { p: this.p + 1 })
-        .then(response => response.data.data)
-        .then((comments) => {
-          this.appendComments(comments)
+      getComments(this.$route.params.id, this.query)
+        .then(({ data }) => {
+          this.comments = data.data
+          this.query.last_page = data.meta.last_page
         })
     },
     /**
@@ -470,7 +455,7 @@ export default {
      *
      * @return {void}
      */
-    genereateCateList () {
+    generateCateList () {
       const list = this.$el.querySelector('.article-content').querySelectorAll('h1, h2, h3, h4, h5')
       const cateList = []
       let [maxDimension, dimension] = [5, '']

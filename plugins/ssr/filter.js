@@ -13,15 +13,9 @@ const serializeMessage = function (obj) {
 // 将后台返回的信息 拼接成字符串
 Vue.filter('serializeMessage', serializeMessage)
 
-const dateFormat = function (timestamp) {
-  return new Date(timestamp * 1000).toLocaleDateString()
-}
-// 将unix时间戳转为日期
-Vue.filter('dateFormat', dateFormat)
-
 const filterSearchType = function (type) {
   return { 'keyword': '关键字', 'tag': '标签' }[type]
 }
 Vue.filter('filterSearchType', filterSearchType)
 
-export { filterSearchType, dateFormat, serializeMessage }
+export { filterSearchType, serializeMessage }

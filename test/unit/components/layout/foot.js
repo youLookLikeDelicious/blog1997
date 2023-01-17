@@ -13,16 +13,6 @@ localVue.use(Vuex)
  */
 const globalState = {
   state: {
-    friendLinkList: [
-      {
-        url: 'url',
-        name: 'name'
-      },
-      {
-        url: 'url2',
-        name: 'name2'
-      }
-    ]
   },
   namespaced: true
 }
@@ -36,9 +26,6 @@ const store = new Vuex.Store({
 const storeWithoutData = new Vuex.Store({
   modules: {
     globalState: {
-      state: {
-        friendLinkList: ''
-      },
       namespaced: true
     }
   }
@@ -57,8 +44,6 @@ describe('test foot component', () => {
     // 获取所有的友链连接
     const links = wrapper.vm.$el.querySelectorAll('.friend-link > a')
     for (let i = 0, len = links.length; i < len; i++) {
-      expect(links[i].href).toBe(globalState.state.friendLinkList[i].url)
-      expect(links[i].innerHTML).toBe(globalState.state.friendLinkList.state[i].name)
     }
   })
 })

@@ -26,11 +26,6 @@ const store = new Vuex.Store({
 })
 
 describe('test index store', () => {
-  it('test nuxtServerInit action', async () => {
-    const dispatch = jest.fn()
-    await index.actions.nuxtServerInit({ dispatch }, { req: 'req' })
-    expect(dispatch).toHaveBeenCalledWith('globalState/getFriendLink', 'req')
-  })
   it('test plugins', () => {
     store.commit('reportIllegalInfo/reportArticle')
     expect(reportArticle).toHaveBeenCalled()

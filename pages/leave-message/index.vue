@@ -7,13 +7,12 @@
     <div class="leave-message-btn-wrap">
       <a href="/" @click.stop.prevent @click="submitMessage">提 交</a>
     </div>
-    <div v-if="commented" class="leave-message-count">
-      共 <span>{{ commented }}</span> 条留言
+    <div v-if="meta.total" class="leave-message-count">
+      共 <span>{{ meta.total }}</span> 条留言
     </div>
-    <commentList
-      :p="p"
-      :pages="pages"
-      :comments="records"
+    <comment-list
+      :show-more-comment="meta.last_page > query.page"
+      :comments="comments"
       @getMoreComments="getMoreLeaveMessage"
       @getMoreReply="getMoreReply"
       @appendReply="appendReply"
@@ -23,9 +22,10 @@
 </template>
 
 <script>
-import commentList from '~/components/comment-list/comment-list'
-import commentMixin from '~/mixins/comment/comment-mixin'
 import editorMixin from '~/mixins/umeditor'
+import { getLeaveMessage, postComment } from '~/api/system'
+import commentMixin from '~/mixins/comment/comment-mixin'
+import commentList from '~/components/comment-list/comment-list'
 const message = '<p style="color: #666; font-size: 1.4rem;">我有一件礼物想呈现给你，那就是在孤独难耐的夜晚，依然会闪闪发光的 漫天繁星</p>'
 export default {
   name: 'Message',
@@ -37,11 +37,10 @@ export default {
     return {
       UM: undefined,
       message,
-      p: 1,
-      pages: 1,
+      meta: { total: 0 },
       editorContent: '',
-      commented: 0,
-      records: []
+      comments: [],
+      query: { page: 1 }
     }
   },
   head () {
@@ -49,12 +48,14 @@ export default {
       title: this.$config.title + ' | Leave-Message'
     }
   },
-  async asyncData ({ app, $responseHandler, req, res }) {
-    const data = await app.$axios.get('leave-message', req)
-      .then(response => $responseHandler(response, res)).catch(() => {
+  async asyncData ({ params }) {
+    const data = await getLeaveMessage(params)
+      .then(res => res.data)
+      .catch(() => {
         return {}
       })
-
+    data.comments = data.data
+    delete data.data
     return data
   },
   methods: {
@@ -84,30 +85,27 @@ export default {
       }
 
       // 开始提交
-      this.$axios.post('/comment', postData)
+      postComment(postData)
         .then((response) => {
           // 评论成功
           // 清空评论窗口的内容
           this.setEditorContent('')
           // 追加评论到第一条
-          this.commented += 1
-          const data = response.data.data
-          data.avatar = this.$store.state.user.avatar
-          data.name = this.$store.state.user.name
-          data.liked = 0
-          this.records.unshift(data)
+          this.meta.total += 1
+          const comment = response.data.data
+          comment.liked = 0
+          this.comments.unshift(comment)
         })
     },
     /**
      * 获取更多的留言
      */
     getMoreLeaveMessage () {
-      this.$axios.get('leave-message?p=' + (this.p + 1))
-        .then(response => response.data.data)
-        .then((data) => {
-          this.records = this.records.concat(data.records)
-          this.p = data.p
-          this.pages = data.pages
+      this.query.page += 1
+      getLeaveMessage(this.query)
+        .then(({ data }) => {
+          this.comments = this.comments.concat(data.data)
+          this.meta = data.meta
         })
     }
   }

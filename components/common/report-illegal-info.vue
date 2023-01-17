@@ -16,8 +16,9 @@
 
 <script>
 import dialogSlot from '~/slot/dialog/dialog'
-import { reportReason } from '~/config/const/report-illegal-info/index'
+import { reportIllegalInfo } from '~/api/system'
 import reportType from '~/config/const/mailbox-map/index'
+import { reportReason } from '~/config/const/report-illegal-info/index'
 
 export default {
   name: 'ReportIllegalInfo',
@@ -64,11 +65,11 @@ export default {
       const postData = {}
       postData.sender = this.$currentUser().id
       postData.receiver = 0
-      postData.type = reportType[this.reportFor]
+      postData.type = this.reportFor
       postData.content = `${this.$store.state.reportIllegalInfo.preDefinedContent},${this.reportModel.reason},${this.reportModel.content}`
       postData.reported_id = this.$store.state.reportIllegalInfo.reportedId
 
-      this.$axios.post(`/report-illegal-info`, postData)
+      reportIllegalInfo(postData)
         .then(() => {
           this.$children[0].close()
         })

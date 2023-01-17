@@ -2,14 +2,13 @@
   <div class="tags hid-overflow">
     <div class="tag-article-list-wrap">
       <div class="tag-detail font-size-14rem color-777">
-        <span class="current-tag">{{ currentTag.name }}</span> <span>该标签共收录 {{ articleNum }} 篇文章</span>
+        <span class="current-tag">{{ currentTag.name }}</span> <span>该标签共收录 {{ meta.total }} 篇文章</span>
       </div>
-      <articleList
-        v-if="articles.length"
-        :articles="articles"
-        :p="p"
+      <article-list
+        v-if="data.length"
+        :articles="data"
+        :has-more-article="query.page < meta.last_page"
         :in-progress="inProgress"
-        :pages="pages"
         @getMoreArticle="getMoreArticle"
       />
     </div>
@@ -19,7 +18,7 @@
       </div>
       <ul v-if="tags.length">
         <li v-for="tag in tags" :key="tag.id">
-          <nuxt-link :to="'/tag/' + tag.id">
+          <nuxt-link :to="'/tag/' + tag.id" :class="{ active: currentTagId === tag.id }">
             {{ tag.name }}
           </nuxt-link>
         </li>
@@ -29,6 +28,7 @@
 </template>
 
 <script>
+import { getTagList } from '~/api/article'
 import ArticleList from '~/components/common/article-list'
 import articleListMixin from '~/mixins/article/article-list-mixin'
 
@@ -40,9 +40,9 @@ export default {
   mixins: [articleListMixin],
   data () {
     return {
-      articleNum: 0, // 专题下文章的数量
       tags: [],
-      articles: [],
+      data: [],
+      query: { page: 1 },
       currentTagId: '',
       getMoreUrl: 'article'
     }
@@ -67,18 +67,13 @@ export default {
       title: this.$config.title + ' | Tag'
     }
   },
-  async asyncData ({ app, $responseHandler, params, req, res }) {
-    const url = params.id ? `/article/tags?tag_id=${params.id}` : '/article/tags'
+  async asyncData ({ params }) {
     // 获取请求的头部
-    const data = await app.$axios.get(url, req)
-      .then(response => $responseHandler(response, res))
-      .then((response) => {
-        return response
-      })
+    const data = await getTagList(params)
+      .then(response => ({ ...response.data }))
       .catch(() => {
         return {}
       })
-
     return data
   }
 }
@@ -100,11 +95,17 @@ export default {
     box-sizing: border-box;
     float: right;
     height: 100%;
-      .icofont-archive{
-        padding-left: .2rem;
-        letter-spacing: .3rem;
-        font-size: 1.6rem;
-      }
+    .icofont-archive{
+      padding-left: .2rem;
+      letter-spacing: .3rem;
+      font-size: 1.6rem;
+    }
+    li a {
+      transition: color .3s;
+    }
+    .active {
+      color: #00c6fb;
+    }
   }
   @media screen and (min-width: 0) {
     .tag-list{
